@@ -1,4 +1,5 @@
 #include <iostream>
+#include <time.h>
 
 using namespace std;
 
@@ -30,8 +31,9 @@ class Queue{    //Implemented by a list like: head --> | --> | --> ... --> | <--
 	public:
 		Queue(const int&,Vehicle**);
 		~Queue();
-		bool is_empty();
+		bool is_empty() const;
 		void enter(Vehicle*);
+		void enter(Vehicle** ,const int& );
 		Vehicle* exit();
 	private:
 		int count;
@@ -41,13 +43,14 @@ class Queue{    //Implemented by a list like: head --> | --> | --> ... --> | <--
 
 class Toll{
 	public:
-		Toll(const int&,const int&,const int&);
-		~Toll();
+		Toll(const int&,const int&,const int&,const int&,const bool&);
+		virtual ~Toll();
 
-		void enter();
-		void exit(const int&);
+		void enter(const int& ,const int& ,const int&);
+		Vehicle* exit();
 
 	private:
+		bool is_empty() const;
+		bool has_a_worker;
 		Queue vehicles_waiting;
 };
-

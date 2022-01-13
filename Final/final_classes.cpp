@@ -1,5 +1,12 @@
 #include "final.h"
 
+int random_number_generator_within_range(int min = 0,int max = 100){
+	srand(time(NULL));
+	int num = rand();
+	return (num + min) % (max + 1);
+}
+
+
 //Vehicle
 Vehicle :: Vehicle(const int& interchange = 0,const int& seg = -1,const bool& move_state = false):
 		exit_interchange(interchange),curr_seg(seg),ready_to_exit(move_state)
@@ -54,7 +61,7 @@ Queue :: ~Queue(){
 	delete tail;
 }
 
-bool Queue :: is_empty(){
+bool Queue :: is_empty() const{
 	return (count > 0);
 }
 
@@ -64,6 +71,16 @@ void Queue :: enter(Vehicle* vehicle){
 	tail->next->next = new_node;	//the previously last node will point to the new last node
 	tail->next = new_node;	//the tail-node wiil also point to the new last node
 }
+
+// void Queue :: enter(Vehicle** vehicle,const int& vehicle_count){
+// 	for(int i = 0;i < vehicle_count; i++){
+// 		count++;
+// 		QueueNode* new_node = new QueueNode(vehicle[i],tail);
+// 		tail->next->next = new_node;	//the previously last node will point to the new last node
+// 		tail->next = new_node;	//the tail-node wiil also point to the new last node
+// 	}
+// }
+
 
 Vehicle* Queue :: exit(){
 	if(is_empty()){
@@ -75,4 +92,28 @@ Vehicle* Queue :: exit(){
 		return to_be_returned;
 	}
 	return NULL;
+}
+
+Toll :: Toll(const int& vehicles,const int& K,const int& interchange,const int& segments,const bool& has_a_worker = false): has_a_worker(has_a_worker){
+	int exit_interchange;
+	for(int i = 0;i < vehicles;i++){
+		exit_interchange = random_number_generator_within_range(interchange + 1,segments);
+		vehicles_waiting.enter(new Vehicle(exit_interchange,interchange));
+	}
+}
+
+void Toll :: enter(const int& vehicles,const int& interchange,const int& segments){
+	int num;
+	for(int i = 0;i < vehicles;i++){
+		num = random_number_generator_within_range(interchange + 1,segments);
+		vehicles_waiting.enter(new Vehicle(num,interchange));
+	}
+}
+
+Vehicle* Toll :: exit(){
+	return vehicles_waiting.exit();
+}
+
+bool Toll :: is_empty() const{
+	return vehicles_waiting.is_empty();
 }
