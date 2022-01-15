@@ -3,9 +3,11 @@
 
 using namespace std;
 
+int random_number_generator_within_range(int , int);
+
 class Vehicle{
 	public:
-		Vehicle(const int&,const int&,const bool&);
+		Vehicle(const int&,const int&,const bool& = false);
 		~Vehicle();
 		Vehicle(const Vehicle&);
 		
@@ -29,7 +31,7 @@ struct QueueNode{
 
 class Queue{    //Implemented by a list like: head --> | --> | --> ... --> | <--> tail
 	public:
-		Queue(const int&,Vehicle**);
+		Queue();
 		~Queue();
 		bool is_empty() const;
 		void enter(Vehicle*);
@@ -43,13 +45,16 @@ class Queue{    //Implemented by a list like: head --> | --> | --> ... --> | <--
 
 class Toll{
 	public:
-		Toll(const int&,const int&,const int&,const bool&);
-		virtual ~Toll();
+		Toll(const int&,const bool&);
+		~Toll();
 
 		void enter(const int& ,const int&);
 		Vehicle* exit();
+		
+		static void set_segments(const int&);
 
 	private:
+		static int segments;
 		bool is_empty() const;
 		bool has_a_worker;
 		Queue vehicles_waiting;
@@ -57,15 +62,17 @@ class Toll{
 class Segment;
 class Entrance{
 	public:
-		Entrance(const int&,const int&,const int&,const int&);
+		Entrance(const int& tolls_with,const int& tolls_without,const int& id,Segment* seg_ptr);
 		~Entrance();
 		void operate(const int&);
 
 		static void set_segments(const int&);
-		
+		void increase_K();
+		void decrease_K();
 	private:
 		static int segments;
 		int id;
+		int K;
 		Segment* entering_segment;
 		Toll** tolls_with_workers;
 		Toll** tolls_with_computer;
@@ -80,39 +87,55 @@ struct ListNode{
 
 class List{    //Implemented by a list like: head --> | --> | --> ... --> | <--> tail
 	public:
-		List(const int&,Vehicle**);
+		List(const int&);
 		~List();
 		bool is_empty() const;
 		void enter(Vehicle*);
+		void exit();
+		Vehicle* pass();
+		Vehicle* delete_next(ListNode*);
+		void set_ready(const int&);
+
+		int get_count() const;
+		int get_ready_ones() const;
 		Vehicle* exit(const int&);
 	private:
 		int count;
+		int id;
 		ListNode* head;
 		ListNode* tail;
 };
 
 class Segment{
 	public:
-		Segment();
+		Segment(const int& NSegs,const int& K,const int& vehicle_capacity,const int id,Segment* previous,Segment* next);
 		~Segment();
 		void operate();
-		int get_no_of_vehicles();
-
+		void insert_vehicle(Vehicle* vehicle);
+		void exit();
+		void enter();
+		Vehicle* pass();
+		void set_ready();
+		int get_no_of_vehicles()const;
+		static void set_percent(const float&);
 	private:
+		int get_cur_capacity()const;
 		Entrance entrance;
 		List vehicles_currently;
-		int vehicle_capacity;
+		const int vehicle_capacity;
 		Segment* next;
 		Segment* previous;
+		static float percent;
 };
 
 class Attica{
 	public:
-		Attica(const int& NSegs);
+		Attica(const int&,const int&,const float&,int*);
 		~Attica();
 		void operate();
 	private:
 		int NSegs;
 		Segment** segs;
+		float percent;
 		int total_count_of_vehicles;
 };
