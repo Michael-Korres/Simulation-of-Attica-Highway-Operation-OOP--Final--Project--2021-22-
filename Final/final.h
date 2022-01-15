@@ -35,6 +35,7 @@ class Queue{    //Implemented by a list like: head --> | --> | --> ... --> | <--
 		~Queue();
 		bool is_empty() const;
 		void enter(Vehicle*);
+		int get_count()const;
 		void enter(Vehicle** ,const int& );
 		Vehicle* exit();
 	private:
@@ -45,17 +46,18 @@ class Queue{    //Implemented by a list like: head --> | --> | --> ... --> | <--
 
 class Toll{
 	public:
-		Toll(const int&,const bool&);
+		Toll(const int&,const int&,const int&,const bool&);
 		~Toll();
 
 		void enter(const int& ,const int&);
 		Vehicle* exit();
-		
-		static void set_segments(const int&);
+		bool is_empty() const;
+		int get_count() const;
 
+		static void set_segments(const int&);
+	
 	private:
 		static int segments;
-		bool is_empty() const;
 		bool has_a_worker;
 		Queue vehicles_waiting;
 };
@@ -64,7 +66,7 @@ class Entrance{
 	public:
 		Entrance(const int& tolls_with,const int& tolls_without,const int& id,Segment* seg_ptr);
 		~Entrance();
-		void operate(const int&);
+		void operate();
 
 		static void set_segments(const int&);
 		void increase_K();
@@ -74,9 +76,14 @@ class Entrance{
 		int id;
 		int K;
 		Segment* entering_segment;
-		Toll** tolls_with_workers;
+		Toll** tolls_with_worker;
 		Toll** tolls_with_computer;
-		
+		int no_of_tolls_with_worker;
+		int no_of_tolls_with_computer;
+		bool all_empty_with_worker() const;
+		bool all_empty_with_computer() const;
+		void insert_from_tolls_with_worker(Toll** ,const int& ,int& );
+		void insert_from_tolls_with_computer(Toll** ,const int& ,int& );
 };
 
 struct ListNode{
@@ -118,8 +125,8 @@ class Segment{
 		void set_ready();
 		int get_no_of_vehicles()const;
 		static void set_percent(const float&);
-	private:
 		int get_cur_capacity()const;
+	private:
 		Entrance entrance;
 		List vehicles_currently;
 		const int vehicle_capacity;

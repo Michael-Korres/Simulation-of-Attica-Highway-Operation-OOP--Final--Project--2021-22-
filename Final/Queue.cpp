@@ -55,3 +55,6 @@ Vehicle* Queue :: exit(){
 	return NULL;
 }
 
+int Queue :: get_count() const{
+	return count;
+}

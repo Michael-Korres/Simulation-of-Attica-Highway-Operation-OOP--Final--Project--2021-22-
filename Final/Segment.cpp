@@ -40,7 +40,7 @@ void Segment :: operate(){
 }
 
 void Segment :: enter(){
-    entrance.operate(get_cur_capacity());
+    entrance.operate();
 }
 
 void Segment :: insert_vehicle(Vehicle* vehicle = NULL){
