@@ -1,10 +1,17 @@
 //Vehicle
 #include "final.h"
 
-Vehicle :: Vehicle(const int& exit_interchange,const int& seg,const bool& move_state = false):
-		exit_interchange(exit_interchange),curr_seg(seg),ready_to_exit(move_state)
+Vehicle :: Vehicle(const int& exit_interchange,const int& curr_seg,const bool& move_state):
+		exit_interchange(exit_interchange),curr_seg(curr_seg),ready_to_exit(move_state)
 {
-	cout << "Just constructed a vehicle." << endl; 
+	cout << "Just constructed a vehicle.";
+	if(this->curr_seg == -1){
+		cout << "It is going to enter the highway.";
+	}
+	else{
+		cout << "It is currently positioned in the segment no." << this->curr_seg << " of the highway.";
+	}
+	cout << "It is headed to the interchange no." << this->exit_interchange << "." << endl;
 }
 
 Vehicle :: ~Vehicle(){
@@ -15,7 +22,7 @@ int Vehicle :: get_exit() const{
 	return exit_interchange;
 }
 
-bool Vehicle :: get_if_ready() const{
+bool Vehicle :: is_ready() const{
 	return ready_to_exit;
 };
 
@@ -26,4 +33,12 @@ void Vehicle :: set_ready(){
 
 void Vehicle :: set_unready(){
 	ready_to_exit = false;
+}
+
+void Vehicle :: set_segment(const int& seg_id){
+	this->curr_seg = seg_id;
+}
+
+int Vehicle :: get_curr_segment() const{
+	return this->curr_seg;
 }

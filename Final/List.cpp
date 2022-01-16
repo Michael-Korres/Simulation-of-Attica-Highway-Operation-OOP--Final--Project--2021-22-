@@ -1,9 +1,9 @@
 #include "final.h"
 
-int random_number_generator_within_range(int min,int max){
+int random_number_generator_within_range(const int& min,const int& max){
 	srand(time(NULL));
 	int num = rand();
-	return (num + min) % (max + 1);
+	return ((num + min) % (max + 1));
 }
 
 
@@ -32,21 +32,11 @@ void List :: enter(Vehicle* vehicle){
 	tail->next = new_node;	//the tail-node wiil also point to the new last node
 }
 
-// void List :: enter(Vehicle** vehicle,const int& vehicle_count){
-// 	for(int i = 0;i < vehicle_count; i++){
-// 		count++;
-// 		ListNode* new_node = new ListNode(vehicle[i],tail);
-// 		tail->next->next = new_node;	//the previously last node will point to the new last node
-// 		tail->next = new_node;	//the tail-node wiil also point to the new last node
-// 	}
-// }
-
-
 void List :: exit(){
 	if(!is_empty()){
 		//ListNode* ptr = head;	//initialize with head
 		for(ListNode* ptr = head; ptr->next!= NULL;ptr = ptr->next){
-			if(ptr->next->vehicle->get_if_ready() && (ptr->next->vehicle->get_exit() == id)){
+			if(ptr->next->vehicle->is_ready() && (ptr->next->vehicle->get_exit() == id)){
 				delete_next(ptr);
 			}
 		}
@@ -57,7 +47,7 @@ Vehicle* List :: pass(){
 	if(!is_empty()){
 		//ListNode* ptr = head;	//initialize with head
 		for(ListNode* ptr = head; ptr->next!= NULL;ptr = ptr->next){
-			if(ptr->next->vehicle->get_if_ready()){
+			if(ptr->next->vehicle->is_ready()){
 				return delete_next(ptr);
 			}
 		}
@@ -69,7 +59,7 @@ int List :: get_ready_ones() const {
 	if(!is_empty()){
 		//ListNode* ptr = head;	//initialize with head
 		for(ListNode* ptr = head; ptr->next != NULL;ptr = ptr->next){
-			if(ptr->next->vehicle->get_if_ready()){
+			if(ptr->next->vehicle->is_ready()){
 				ready_count++;
 			}
 		}
@@ -84,7 +74,7 @@ void List :: set_ready(const int& percent){
 	ListNode* ptr = head->next;
 	
 	for(int i = 0;i < unready_ones_that_will_get_ready;i++){
-		if(!ptr->vehicle->get_if_ready())
+		if(!ptr->vehicle->is_ready())
 			ptr->vehicle->set_ready();
 		ptr = ptr->next;
 	}

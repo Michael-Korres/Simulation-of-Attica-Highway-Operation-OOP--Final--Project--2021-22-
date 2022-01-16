@@ -7,7 +7,7 @@ Segment :: Segment(const int& NSegs,const int& K,const int& capacity,const int i
 	
     for(int i = 0;i < vehicles;i++){
 		exit_interchange = random_number_generator_within_range(id + 1,NSegs);
-		vehicles_currently.enter(new Vehicle(exit_interchange,id));
+		vehicles_currently.enter(new Vehicle(exit_interchange,id,false));
 	}
 
 }
@@ -51,7 +51,6 @@ void Segment :: operate(){
             }
         }
     }    
-
     
 
     cout << "Some vehicles will get ready to move forward." << endl;
@@ -91,4 +90,8 @@ Vehicle* Segment :: pass(){
 
 void Segment :: set_ready(){
     vehicles_currently.set_ready(percent);
+}
+
+void Segment :: set_percent(const float& percent){
+    Segment:: percent = percent;
 }

@@ -2,7 +2,10 @@
 CC = g++
 
 #Object files
-OBJS = final_classes.o final_main.o
+OBJS = Vehicle.o test_vehicle.o
+
+#Attica.o Entrance.o List.o Queue.o Segment.o Toll.o 
+
 #Executable
 EXEC:	$(OBJS)
 	$(CC) -g3 -o p $(OBJS)
@@ -13,4 +16,4 @@ run:
 
 #Clean
 clean:
-	rm -f $(OBJS) p
+	rm -f Attica.o Entrance.o List.o Queue.o Segment.o Toll.o Vehicle.o vehicle_test.o  p

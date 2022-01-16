@@ -4,7 +4,6 @@
 Attica :: Attica(const int& NSegs,const int& K,const float& percent,int* segs_capacity):NSegs(NSegs),percent(percent){
 		cout << "Highway in operation." << endl;
 		total_count_of_vehicles = 0;
-		Segment :: set_percent(percent);
 		for(int id = 1; id < NSegs;id++){
 			if(id == 1){
 				segs[0] = new Segment(NSegs,K,segs_capacity[0],0,NULL,segs[1]);
@@ -19,7 +18,7 @@ Attica :: Attica(const int& NSegs,const int& K,const float& percent,int* segs_ca
 			total_count_of_vehicles += segs[id]->get_no_of_vehicles();
 		
 		}
-
+		Segment :: set_percent(percent);
 
 }
 

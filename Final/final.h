@@ -3,20 +3,20 @@
 
 using namespace std;
 
-int random_number_generator_within_range(int , int);
+int random_number_generator_within_range(const int& , const int&);
 
 class Vehicle{
 	public:
-		Vehicle(const int&,const int&,const bool& = false);
+		Vehicle(const int&,const int& = -1,const bool& = false);
 		~Vehicle();
-		Vehicle(const Vehicle&);
-		
+	
 		int get_exit() const;
-		bool get_if_ready() const;
+		bool is_ready() const;
+		int get_curr_segment() const;
 
 		void set_ready();
 		void set_unready();
-
+		void set_segment(const int&);
 	private:
 		int exit_interchange;
 		int curr_seg;
@@ -49,15 +49,15 @@ class Toll{
 		Toll(const int&,const int&,const int&,const bool&);
 		~Toll();
 
-		void enter(const int&,const int& ,const int&);
-		Vehicle* exit();
+		void enter_the_toll(const int&,const int& ,const int&);
+		Vehicle* exit_to_the_seg();
 		bool is_empty() const;
 		int get_count() const;
 
-		static void set_segments(const int&);
+		static void set_NSegs(const int&);
 	
 	private:
-		static int segments;
+		static int NSegs;
 		bool has_a_worker;
 		Queue vehicles_waiting;
 };
@@ -68,11 +68,11 @@ class Entrance{
 		~Entrance();
 		bool operate();
 		void enter();
-		static void set_segments(const int&);
+		static void set_NSegs(const int&);
 		void increase_K();
 		void decrease_K();
 	private:
-		static int segments;
+		static int NSegs;
 		int id;
 		int K;
 		Segment* entering_segment;
