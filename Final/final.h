@@ -49,7 +49,7 @@ class Toll{
 		Toll(const int&,const int&,const int&,const bool&);
 		~Toll();
 
-		void enter(const int& ,const int&);
+		void enter(const int&,const int& ,const int&);
 		Vehicle* exit();
 		bool is_empty() const;
 		int get_count() const;
@@ -64,10 +64,10 @@ class Toll{
 class Segment;
 class Entrance{
 	public:
-		Entrance(const int& tolls_with,const int& tolls_without,const int& id,Segment* seg_ptr);
+		Entrance(const int& cur_capacity,const int& id,Segment* seg_ptr);
 		~Entrance();
-		void operate();
-
+		bool operate();
+		void enter();
 		static void set_segments(const int&);
 		void increase_K();
 		void decrease_K();
@@ -120,16 +120,18 @@ class Segment{
 		void operate();
 		void insert_vehicle(Vehicle* vehicle);
 		void exit();
-		void enter();
+		bool enter();
 		Vehicle* pass();
 		void set_ready();
 		int get_no_of_vehicles()const;
 		static void set_percent(const float&);
 		int get_cur_capacity()const;
 	private:
+		int NSegs;
 		Entrance entrance;
 		List vehicles_currently;
 		const int vehicle_capacity;
+		const int id;
 		Segment* next;
 		Segment* previous;
 		static float percent;

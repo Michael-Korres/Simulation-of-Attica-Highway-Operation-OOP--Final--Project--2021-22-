@@ -1,7 +1,7 @@
 #include "final.h"
 //Segment
 Segment :: Segment(const int& NSegs,const int& K,const int& capacity,const int id,Segment* previous,Segment* next):
-	entrance(random_number_generator_within_range(1,capacity/2),random_number_generator_within_range(1,capacity/2),id,this),vehicles_currently(id),vehicle_capacity(capacity),previous(previous),next(next){
+	NSegs(NSegs),entrance(get_cur_capacity(),id,this),vehicles_currently(id),id(id),vehicle_capacity(capacity),previous(previous),next(next){
 	int exit_interchange;
 	int vehicles = random_number_generator_within_range(0,vehicle_capacity);
 	
@@ -23,24 +23,52 @@ int Segment :: get_cur_capacity()const{
 void Segment :: operate(){
     cout << "Some vehicles will exit the highway." << endl;
     vehicles_currently.exit();
+
+    int message = 0;
+
+    if(id != NSegs - 1){
+        cout << "Some others will pass onto the next segment." << endl;
+        
+        int next_seg_capacity = next->get_cur_capacity();
+        
+
+        if(vehicles_currently.get_ready_ones() > next_seg_capacity)
+            message = 1;
+        
+        for(int i = 0; i < next_seg_capacity; i++){
+            next->insert_vehicle(this->pass());
+        }      
+        
+        cout << "Some vehicles will enter via the entrance." << endl;
+
+        bool  flag = enter();
+        if(flag){}
+    }    
+
     
-    cout << "Some others will pass onto the next segment." << endl;
-    int next_seg_capacity = next->get_cur_capacity();
-    //if(vehicles_currently.get_ready_ones() <= next_seg_capacity){
-    while(next_seg_capacity != 0){
-        next->insert_vehicle(this->pass());
-    }      
-
-
-    cout << "Some vehicles will enter via the entrance." << endl;
-    enter();
 
     cout << "Some vehicles will get ready to move forward." << endl;
     set_ready();
+
+    switch(message){
+        case 0:
+            cout << "Maintain the safety distances after interchange " << this->id << "." << endl;
+        case 1:
+            // if(id == 0){
+            //     cout << "Delays in the main entrance of the highway." << endl;
+            // }
+            // else{
+            cout << "Delays in the entrance of interchange " << this->id << "." << endl;
+            
+        case 2:
+            
+        case 3:
+                cout << "Delays after interchange " << this->id << "." << endl;            
+    }
 }
 
-void Segment :: enter(){
-    entrance.operate();
+bool Segment :: enter(){
+    return entrance.operate();
 }
 
 void Segment :: insert_vehicle(Vehicle* vehicle = NULL){

@@ -1,12 +1,18 @@
 //Entrance
 #include "final.h"
 
-Entrance :: Entrance(const int& no_of_tolls_with_worker,const int& no_of_tolls_with_computer,const int& id,Segment* seg_ptr):
-id(id),entering_segment(seg_ptr),no_of_tolls_with_worker(no_of_tolls_with_worker),no_of_tolls_with_computer(no_of_tolls_with_computer){
-	for(int i = 0; i < no_of_tolls_with_worker;i++)
-		tolls_with_worker[i] = new Toll(100,id,segments,true);
-	for(int i = 0; i < no_of_tolls_with_computer;i++)
-		tolls_with_computer[i] = new Toll(100,id,segments,false);	
+Entrance :: Entrance(const int& cur_capacity,const int& id,Segment* seg_ptr):
+id(id),entering_segment(seg_ptr),no_of_tolls_with_worker(random_number_generator_within_range(4,9)),no_of_tolls_with_computer(random_number_generator_within_range(3,5)){
+								//The no of tolls based in Real-World Attica
+	int no_of_cars_initially = (cur_capacity * 0.4) / no_of_tolls_with_worker;//0.4 of the current capacity / number of tolls with worker
+	for(int i = 0; i < no_of_tolls_with_worker;i++){
+
+		tolls_with_worker[i] = new Toll(no_of_cars_initially,id,segments,true);
+	}
+	no_of_cars_initially = (cur_capacity * 1.1) / no_of_tolls_with_computer;//1.1 of the current capacity / number of tolls with worker
+	for(int i = 0; i < no_of_tolls_with_computer;i++){
+		tolls_with_computer[i] = new Toll(no_of_cars_initially,id,segments,false);	
+	}
 }
 
 Entrance :: ~Entrance(){
@@ -14,7 +20,7 @@ Entrance :: ~Entrance(){
 	delete[] tolls_with_computer;	
 }
 
-void Entrance :: operate(){
+bool Entrance :: operate(){
 	int cars_that_can_enter = entering_segment->get_cur_capacity();
 	int count_of_cars_worker = 0;
 	int count_of_cars_computer = 0;
@@ -42,22 +48,49 @@ void Entrance :: operate(){
 					}
 			}
 			else{
-				if(!all_empty_with_computer())
+				if(!all_empty_with_computer()){
 						insert_from_tolls_with_computer(tolls_with_computer,no_of_tolls_with_computer,count_of_cars_computer);
-					
+				}
+				else{
+					break;
+				}
 			}
 		}
 		else {
-			if(!all_empty_with_computer())
+			if(!all_empty_with_computer()){
 						insert_from_tolls_with_computer(tolls_with_computer,no_of_tolls_with_computer,count_of_cars_computer);
-				
+			}
+			else{
+				break;
+			}
 		}
 	}
 
 	if(flag)
-		if(count_of_cars_worker + count_of_cars_computer == 3 * K)
-			K--;
+		if(count_of_cars_worker + count_of_cars_computer < 3 * K)
+			decrease_K();
+		else if((count_of_cars_worker == K) && (count_of_cars_computer == 2 * K))
+			increase_K();
 
+	bool return_value = (all_empty_with_computer() && all_empty_with_worker) ? true : false;
+	
+	enter();
+
+	return return_value;
+}
+
+void Entrance :: enter(){
+	int seg_cur_capacity = entering_segment->get_cur_capacity();
+	int vehicles_to_enter = (seg_cur_capacity * 0.4) / no_of_tolls_with_worker;//0.4 of the current capacity / number of tolls with worker
+	for(int i = 0; i < no_of_tolls_with_worker;i++){
+		tolls_with_worker[i]->enter(seg_cur_capacity,id,segments);
+	}
+
+	vehicles_to_enter = (seg_cur_capacity * 1.1) / no_of_tolls_with_computer;//1.1 of the current capacity / number of tolls with computer
+	for(int i = 0; i < no_of_tolls_with_computer;i++){
+		tolls_with_computer[i]->enter(seg_cur_capacity,id,segments);
+	}
+	
 }
 
 void Entrance :: insert_from_tolls_with_worker(Toll** toll,const int& no_of_tolls,int& count){
@@ -68,6 +101,21 @@ void Entrance :: insert_from_tolls_with_worker(Toll** toll,const int& no_of_toll
 		i++;
 		if(i == no_of_tolls){
 			i = 0;
+		}
+	}
+
+	entering_segment->insert_vehicle(temp);
+	count++;
+}
+
+void Entrance :: insert_from_tolls_with_computer(Toll** toll,const int& no_of_tolls,int& count){
+	Vehicle* temp;
+	static int j = 0;
+	
+	while((temp = toll[j]->exit()) == NULL){
+		j++;
+		if(j == no_of_tolls){
+			j = 0;
 		}
 	}
 
