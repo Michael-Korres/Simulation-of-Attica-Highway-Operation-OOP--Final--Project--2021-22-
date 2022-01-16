@@ -1,12 +1,5 @@
 #include "final.h"
 
-int random_number_generator_within_range(const int& min,const int& max){
-	srand(time(NULL));
-	int num = rand();
-	return ((num + min) % (max + 1));
-}
-
-
 //List
 List :: List(const int& id): id(id),count(0){
 	head = new ListNode(NULL,tail);

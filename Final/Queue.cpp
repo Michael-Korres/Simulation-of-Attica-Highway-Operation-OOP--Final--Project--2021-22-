@@ -6,7 +6,6 @@ QueueNode :: QueueNode(Vehicle* vehicle = NULL,QueueNode* next = NULL):
 
 }
 
-
 //Queue
 Queue :: Queue(){
 	head = new QueueNode(NULL,tail);
@@ -15,7 +14,7 @@ Queue :: Queue(){
 }
 
 Queue :: ~Queue(){
-	while(count != 0){
+	while(count > 0){
 		exit();
 	}
 	delete head;
@@ -23,7 +22,7 @@ Queue :: ~Queue(){
 }
 
 bool Queue :: is_empty() const{
-	return (count > 0);
+	return !(count > 0);
 }
 
 void Queue :: enter(Vehicle* vehicle){
@@ -32,15 +31,6 @@ void Queue :: enter(Vehicle* vehicle){
 	tail->next->next = new_node;	//the previously last node will point to the new last node
 	tail->next = new_node;	//the tail-node wiil also point to the new last node
 }
-
-// void Queue :: enter(Vehicle** vehicle,const int& vehicle_count){
-// 	for(int i = 0;i < vehicle_count; i++){
-// 		count++;
-// 		QueueNode* new_node = new QueueNode(vehicle[i],tail);
-// 		tail->next->next = new_node;	//the previously last node will point to the new last node
-// 		tail->next = new_node;	//the tail-node wiil also point to the new last node
-// 	}
-// }
 
 
 Vehicle* Queue :: exit(){

@@ -2,7 +2,7 @@
 CC = g++
 
 #Object files
-OBJS = Vehicle.o test_vehicle.o
+OBJS = random.o Vehicle.o Queue.o Toll.o test_toll.o
 
 #Attica.o Entrance.o List.o Queue.o Segment.o Toll.o 
 

@@ -1,7 +1,7 @@
 //Entrance
 #include "final.h"
 
-Entrance :: Entrance(const int& cur_capacity,const int& id,Segment* seg_ptr):
+Entrance :: Entrance(unsigned const int& cur_capacity,unsigned const int& id,Segment* seg_ptr):
 id(id),entering_segment(seg_ptr),no_of_tolls_with_worker(random_number_generator_within_range(4,9)),no_of_tolls_with_computer(random_number_generator_within_range(3,5)){
 								//The no of tolls based in Real-World Attica
 	int no_of_cars_initially = (cur_capacity * 0.4) / no_of_tolls_with_worker;//0.4 of the current capacity / number of tolls with worker
@@ -123,7 +123,7 @@ void Entrance :: insert_from_tolls_with_computer(Toll** toll,const int& no_of_to
 	count++;
 }
 
-void Entrance :: set_NSegs(const int& NSegs){
+void Entrance :: set_NSegs(unsigned const int& NSegs){
 	Entrance :: NSegs = NSegs;
     Toll :: set_NSegs(NSegs);
 }
