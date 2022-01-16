@@ -24,7 +24,7 @@ void Segment :: operate(){
     cout << "Some vehicles will exit the highway." << endl;
     vehicles_currently.exit();
 
-    int message = 0;
+    int message = 0;    //if nothing is true then we have the case 0
 
     if(id != NSegs - 1){
         cout << "Some others will pass onto the next segment." << endl;
@@ -33,7 +33,7 @@ void Segment :: operate(){
         
 
         if(vehicles_currently.get_ready_ones() > next_seg_capacity)
-            message = 1;
+            message = 1;    //if the ready ones are more than the next seg's capacity then case 1
         
         for(int i = 0; i < next_seg_capacity; i++){
             next->insert_vehicle(this->pass());
@@ -42,7 +42,14 @@ void Segment :: operate(){
         cout << "Some vehicles will enter via the entrance." << endl;
 
         bool  flag = enter();
-        if(flag){}
+        if(flag){
+            if(message == 0){
+                message = 2;    //if the ready ones are less than the next segs's capacity
+            }                   //but all vehicles from the tolls entered then case 2
+            else{
+                message = 3;    //if both are true then case 3
+            }
+        }
     }    
 
     
@@ -53,17 +60,16 @@ void Segment :: operate(){
     switch(message){
         case 0:
             cout << "Maintain the safety distances after interchange " << this->id << "." << endl;
+            break;
         case 1:
-            // if(id == 0){
-            //     cout << "Delays in the main entrance of the highway." << endl;
-            // }
-            // else{
-            cout << "Delays in the entrance of interchange " << this->id << "." << endl;
-            
+            cout << "Delays after interchange " << this->id << "." << endl;              
+            break;
         case 2:
-            
+            cout << "Delays in the entrance of interchange " << this->id << "." << endl;
+            break;
         case 3:
-                cout << "Delays after interchange " << this->id << "." << endl;            
+            cout << "Delays in the entrance of interchange " << this->id << "." << endl;
+            cout << "Delays after interchange " << this->id << "." << endl;
     }
 }
 
