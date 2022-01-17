@@ -4,5 +4,7 @@
         "ostream": "cpp",
         "random": "cpp",
         "limits": "cpp"
-    }
+    },
+    "workbench.editor.highlightModifiedTabs": true,
+    "workbench.editor.scrollToSwitchTabs": true
 }

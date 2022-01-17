@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int random_number_generator_within_range(const int& , const int&);
+ unsigned int random_number_generator_within_range(const int& , const int&);
 
 class Vehicle{
 	public:

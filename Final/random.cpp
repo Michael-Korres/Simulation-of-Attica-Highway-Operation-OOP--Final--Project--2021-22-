@@ -1,6 +1,11 @@
 #include "final.h"
 
-int random_number_generator_within_range(const int& min,const int& max){
-	int num = rand();
-	return ((num + min) % (max + 1));
+unsigned int random_number_generator_within_range(const int& min,const int& max){
+	if(min <= max){
+		int X = rand();
+		return (min + X % (max - min + 1));
+	}
+	else {
+		return 0;
+	}
 }

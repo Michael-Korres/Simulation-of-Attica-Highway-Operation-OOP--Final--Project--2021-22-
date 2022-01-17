@@ -5,7 +5,6 @@ QueueNode :: QueueNode(Vehicle* vehicle = NULL,QueueNode* next = NULL):
 					   vehicle(vehicle),next(next){
 
 }
-
 //Queue
 Queue :: Queue(){
 	head = new QueueNode(NULL,tail);

@@ -16,4 +16,4 @@ run:
 
 #Clean
 clean:
-	rm -f Attica.o Entrance.o List.o Queue.o Segment.o Toll.o Vehicle.o vehicle_test.o  p
+	rm -f $(OBJS)  p
