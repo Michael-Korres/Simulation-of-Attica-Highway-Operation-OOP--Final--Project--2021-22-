@@ -1,7 +1,13 @@
 #include "final.h"
 
+//ListNode
+ListNode :: ListNode(Vehicle* vehicle,ListNode* next):
+					   vehicle(vehicle),next(next){
+
+}
+
 //List
-List :: List(const int& id): id(id),count(0){
+List :: List(const int& seg_id): seg_id(seg_id),count(0){
 	head = new ListNode(NULL,tail);
 	//tail = new ListNode(NULL,head);
 }
@@ -29,7 +35,7 @@ void List :: exit(){
 	if(!is_empty()){
 		//ListNode* ptr = head;	//initialize with head
 		for(ListNode* ptr = head; ptr->next!= NULL;ptr = ptr->next){
-			if(ptr->next->vehicle->is_ready() && (ptr->next->vehicle->get_exit() == id)){
+			if(ptr->next->vehicle->is_ready() && (ptr->next->vehicle->get_exit() == seg_id)){
 				delete_next(ptr);
 			}
 		}
@@ -45,6 +51,7 @@ Vehicle* List :: pass(){
 			}
 		}
 	}
+	return NULL;
 }
 
 int List :: get_ready_ones() const {
@@ -94,3 +101,7 @@ Vehicle* List :: delete_next(ListNode* wanted_one){
 	return NULL;
 }
 
+int List :: get_count() const{
+	return count;
+}
+		

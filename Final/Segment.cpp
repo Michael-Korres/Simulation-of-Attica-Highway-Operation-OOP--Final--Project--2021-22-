@@ -1,15 +1,26 @@
 #include "final.h"
 //Segment
-Segment :: Segment(const int& NSegs,const int& K,const int& capacity,const int id,Segment* previous,Segment* next):
-	NSegs(NSegs),entrance(get_cur_capacity(),id,this),vehicles_currently(id),id(id),vehicle_capacity(capacity),previous(previous),next(next){
-	int exit_interchange;
+Segment :: Segment(const int& K,const int& capacity,const int seg_id,Segment* previous,Segment* next): entrance(capacity,seg_id,this),vehicles_currently(seg_id),seg_id(seg_id),vehicle_capacity(capacity),previous(previous),next(next){
+    cout << "1st Print from Segment Constructor." << endl;
+    
+    int exit_interchange;
 	int vehicles = random_number_generator_within_range(0,vehicle_capacity);
-	
+	cout << "2nd Print from Segment Constructor." << endl;
     for(int i = 0;i < vehicles;i++){
-		exit_interchange = random_number_generator_within_range(id + 1,NSegs);
-		vehicles_currently.enter(new Vehicle(exit_interchange,id,false));
+        cout << "Print from Seg-Loop" << endl;
+		exit_interchange = random_number_generator_within_range(seg_id + 1,NSegs);
+		vehicles_currently.enter(new Vehicle(exit_interchange,seg_id,false));
 	}
 
+}
+
+Segment :: ~Segment(){
+    while(!vehicles_currently.is_empty()){
+		delete vehicles_currently.pass();
+	}
+
+	cout << "Just destructed a segment." <<  endl;
+	
 }
 
 int Segment :: get_no_of_vehicles() const{
@@ -26,7 +37,7 @@ void Segment :: operate(){
 
     int message = 0;    //if nothing is true then we have the case 0
 
-    if(id != NSegs - 1){
+    if(seg_id != NSegs - 1){
         cout << "Some others will pass onto the next segment." << endl;
         
         int next_seg_capacity = next->get_cur_capacity();
@@ -58,17 +69,17 @@ void Segment :: operate(){
 
     switch(message){
         case 0:
-            cout << "Maintain the safety distances after interchange " << this->id << "." << endl;
+            cout << "Maintain the safety distances after interchange " << this->seg_id << "." << endl;
             break;
         case 1:
-            cout << "Delays after interchange " << this->id << "." << endl;              
+            cout << "Delays after interchange " << this->seg_id << "." << endl;              
             break;
         case 2:
-            cout << "Delays in the entrance of interchange " << this->id << "." << endl;
+            cout << "Delays in the entrance of interchange " << this->seg_id << "." << endl;
             break;
         case 3:
-            cout << "Delays in the entrance of interchange " << this->id << "." << endl;
-            cout << "Delays after interchange " << this->id << "." << endl;
+            cout << "Delays in the entrance of interchange " << this->seg_id << "." << endl;
+            cout << "Delays after interchange " << this->seg_id << "." << endl;
     }
 }
 
@@ -95,3 +106,11 @@ void Segment :: set_ready(){
 void Segment :: set_percent(const float& percent){
     Segment:: percent = percent;
 }
+
+float Segment :: percent = 0.6;
+
+void Segment :: set_NSegs(const int& NSegs){
+    Segment:: NSegs = NSegs;
+}
+
+int Segment :: NSegs = 5;

@@ -57,6 +57,7 @@ class Toll{
 		static void set_NSegs(unsigned const int&);
 	
 	private:
+		int seg_id;
 		static int NSegs;
 		bool has_a_worker;
 		Queue vehicles_waiting;
@@ -74,7 +75,7 @@ class Entrance{
 		void decrease_K();
 	private:
 		static int NSegs;
-		int id;
+		int seg_id;
 		int K;
 		Segment* entering_segment;
 		Toll** tolls_with_worker;
@@ -108,14 +109,14 @@ class List{    //Implemented by a list like: head --> | --> | --> ... --> | <-->
 		Vehicle* exit(const int&);
 	private:
 		int count;
-		int id;
+		const int seg_id;
 		ListNode* head;
 		ListNode* tail;
 };
 
 class Segment{
 	public:
-		Segment(const int& NSegs,const int& K,const int& vehicle_capacity,const int id,Segment* previous,Segment* next);
+		Segment(const int& K,const int& vehicle_capacity,const int id,Segment* previous,Segment* next);
 		~Segment();
 		void operate();
 		void insert_vehicle(Vehicle* vehicle);
@@ -125,13 +126,14 @@ class Segment{
 		void set_ready();
 		int get_no_of_vehicles()const;
 		static void set_percent(const float&);
+		static void set_NSegs(const int&);
 		int get_cur_capacity()const;
 	private:
-		int NSegs;
+		static int NSegs;
 		Entrance entrance;
 		List vehicles_currently;
 		const int vehicle_capacity;
-		const int id;
+		const int seg_id;
 		Segment* next;
 		Segment* previous;
 		static float percent;
@@ -143,6 +145,7 @@ class Attica{
 		~Attica();
 		void operate();
 	private:
+		static void set_NSegs(const int&);
 		int NSegs;
 		Segment** segs;
 		float percent;

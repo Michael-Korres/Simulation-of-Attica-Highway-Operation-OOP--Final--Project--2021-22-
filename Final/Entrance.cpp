@@ -1,17 +1,32 @@
 //Entrance
 #include "final.h"
 
-Entrance :: Entrance(unsigned const int& cur_capacity,unsigned const int& id,Segment* seg_ptr):
-id(id),entering_segment(seg_ptr),no_of_tolls_with_worker(random_number_generator_within_range(4,9)),no_of_tolls_with_computer(random_number_generator_within_range(3,5)){
+Entrance :: Entrance(unsigned const int& cur_capacity,unsigned const int& seg_id,Segment* seg_ptr):
+seg_id(seg_id),entering_segment(seg_ptr),no_of_tolls_with_worker(random_number_generator_within_range(4,9)),no_of_tolls_with_computer(random_number_generator_within_range(3,5)){
 								//The no of tolls based in Real-World Attica
-	int no_of_cars_initially = (cur_capacity * 0.4) / no_of_tolls_with_worker;//0.4 of the current capacity / number of tolls with worker
-	for(int i = 0; i < no_of_tolls_with_worker;i++){
+	cout << "1st Print from Entrance" << endl;
+	cout << "The tolls with worker are " <<  no_of_tolls_with_worker << endl;
+	cout << "The tolls with computer are " <<  no_of_tolls_with_computer << endl;
 
-		tolls_with_worker[i] = new Toll(no_of_cars_initially,id,NSegs,true);
+	tolls_with_worker = new Toll*[no_of_tolls_with_worker];
+	tolls_with_computer = new Toll*[no_of_tolls_with_computer];
+
+	int least_no_of_cars_in_each = (cur_capacity * 0.4) / no_of_tolls_with_worker;//0.4 of the current capacity / number of tolls with worker
+	
+	cout << "Each toll with worker will start with at least " << least_no_of_cars_in_each << " vehicles" << endl;
+
+	for(int i = 0; i < no_of_tolls_with_worker;i++){
+		cout << "Print from Entrance - Loop" << endl;
+		tolls_with_worker[i] = new Toll(least_no_of_cars_in_each,seg_id,true);
 	}
-	no_of_cars_initially = (cur_capacity * 1.1) / no_of_tolls_with_computer;//1.1 of the current capacity / number of tolls with worker
+
+	least_no_of_cars_in_each = (cur_capacity * 1.1) / no_of_tolls_with_computer;//1.1 of the current capacity / number of tolls with worker
+	
+	cout << "Each toll with computer will start with at least " << least_no_of_cars_in_each << " vehicles" << endl;
+
+	
 	for(int i = 0; i < no_of_tolls_with_computer;i++){
-		tolls_with_computer[i] = new Toll(no_of_cars_initially,id,NSegs,false);	
+		tolls_with_computer[i] = new Toll(least_no_of_cars_in_each,seg_id,false);	
 	}
 }
 
@@ -85,12 +100,12 @@ void Entrance :: enter(){
 	int seg_cur_capacity = entering_segment->get_cur_capacity();
 	int vehicles_to_enter = (seg_cur_capacity * 0.4) / no_of_tolls_with_worker;//0.4 of the current capacity / number of tolls with worker
 	for(int i = 0; i < no_of_tolls_with_worker;i++){
-		tolls_with_worker[i]->enter_the_toll(seg_cur_capacity,id,NSegs);
+		tolls_with_worker[i]->enter_the_toll(seg_cur_capacity,seg_id);
 	}
 
 	vehicles_to_enter = (seg_cur_capacity * 1.1) / no_of_tolls_with_computer;//1.1 of the current capacity / number of tolls with computer
 	for(int i = 0; i < no_of_tolls_with_computer;i++){
-		tolls_with_computer[i]->enter_the_toll(seg_cur_capacity,id,NSegs);
+		tolls_with_computer[i]->enter_the_toll(seg_cur_capacity,seg_id);
 	}
 	
 }
@@ -111,8 +126,10 @@ void Entrance :: insert_from_tolls(Toll** toll,const int& no_of_tolls,int& count
 
 void Entrance :: set_NSegs(unsigned const int& NSegs){
 	Entrance :: NSegs = NSegs;
-    Toll :: set_NSegs(NSegs);
+	Toll :: set_NSegs(NSegs);
 }
+
+int Entrance:: NSegs = 5;
 
 bool Entrance :: all_empty_with_worker() const{
 	bool flag = true;
@@ -134,4 +151,12 @@ bool Entrance :: all_empty_with_computer() const{
 		}
 	}
 	return flag;
+}
+
+void Entrance :: increase_K(){
+	K++;
+}
+
+void Entrance :: decrease_K(){
+	K--;
 }
