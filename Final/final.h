@@ -46,10 +46,10 @@ class Queue{    //Implemented by a list like: head --> | --> | --> ... --> | <--
 
 class Toll{
 	public:
-		Toll(unsigned const int&,unsigned const int&,unsigned const int&,const bool&);
+		Toll(unsigned const int&,unsigned const int&,const bool&);
 		~Toll();
 
-		void enter_the_toll(unsigned const int&,unsigned const int& ,unsigned const int&);
+		void enter_the_toll(unsigned const int&,unsigned const int&);
 		Vehicle* exit_to_the_seg();
 		bool is_empty() const;
 		int get_count() const;
@@ -83,8 +83,7 @@ class Entrance{
 		int no_of_tolls_with_computer;
 		bool all_empty_with_worker() const;
 		bool all_empty_with_computer() const;
-		void insert_from_tolls_with_worker(Toll** ,const int& ,int& );
-		void insert_from_tolls_with_computer(Toll** ,const int& ,int& );
+		void insert_from_tolls(Toll** ,const int& ,int&, int& );
 };
 
 struct ListNode{

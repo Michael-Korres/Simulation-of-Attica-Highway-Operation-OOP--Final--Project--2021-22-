@@ -24,6 +24,8 @@ bool Entrance :: operate(){
 	int cars_that_can_enter = entering_segment->get_cur_capacity();
 	int count_of_cars_worker = 0;
 	int count_of_cars_computer = 0;
+	int i = 0;
+	int j = 0;
  	Vehicle* temp;
 	
 	int barrier;
@@ -41,15 +43,15 @@ bool Entrance :: operate(){
 		
 		if(count_of_cars_worker < K){
 			if(!all_empty_with_worker()){	
-				insert_from_tolls_with_worker(tolls_with_worker,no_of_tolls_with_worker,count_of_cars_worker);
+				insert_from_tolls(tolls_with_worker,no_of_tolls_with_worker,count_of_cars_worker,i);
 					for(int i = 0; i < 2; i++){
 						if(!all_empty_with_computer())
-						insert_from_tolls_with_computer(tolls_with_computer,no_of_tolls_with_computer,count_of_cars_computer);
+						insert_from_tolls(tolls_with_computer,no_of_tolls_with_computer,count_of_cars_computer,j);
 					}
 			}
 			else{
 				if(!all_empty_with_computer()){
-						insert_from_tolls_with_computer(tolls_with_computer,no_of_tolls_with_computer,count_of_cars_computer);
+						insert_from_tolls(tolls_with_computer,no_of_tolls_with_computer,count_of_cars_computer,j);
 				}
 				else{
 					break;
@@ -58,7 +60,7 @@ bool Entrance :: operate(){
 		}
 		else {
 			if(!all_empty_with_computer()){
-						insert_from_tolls_with_computer(tolls_with_computer,no_of_tolls_with_computer,count_of_cars_computer);
+						insert_from_tolls(tolls_with_computer,no_of_tolls_with_computer,count_of_cars_computer,j);
 			}
 			else{
 				break;
@@ -93,14 +95,12 @@ void Entrance :: enter(){
 	
 }
 
-void Entrance :: insert_from_tolls_with_worker(Toll** toll,const int& no_of_tolls,int& count){
+void Entrance :: insert_from_tolls(Toll** toll,const int& no_of_tolls,int& count,int& k){
 	Vehicle* temp;
-	static int i = 0;
-	
-	while((temp = toll[i]->exit_to_the_seg()) == NULL){
-		i++;
-		if(i == no_of_tolls){
-			i = 0;
+	while((temp = toll[k]->exit_to_the_seg()) == NULL){
+		k++;
+		if(k == no_of_tolls){
+			k = 0;
 		}
 	}
 
@@ -108,20 +108,6 @@ void Entrance :: insert_from_tolls_with_worker(Toll** toll,const int& no_of_toll
 	count++;
 }
 
-void Entrance :: insert_from_tolls_with_computer(Toll** toll,const int& no_of_tolls,int& count){
-	Vehicle* temp;
-	static int j = 0;
-	
-	while((temp = toll[j]->exit_to_the_seg()) == NULL){
-		j++;
-		if(j == no_of_tolls){
-			j = 0;
-		}
-	}
-
-	entering_segment->insert_vehicle(temp);
-	count++;
-}
 
 void Entrance :: set_NSegs(unsigned const int& NSegs){
 	Entrance :: NSegs = NSegs;
