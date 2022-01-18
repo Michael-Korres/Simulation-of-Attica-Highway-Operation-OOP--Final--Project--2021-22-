@@ -45,14 +45,44 @@ void Segment :: operate(){
         
         int next_seg_capacity = next->get_cur_capacity();
         
-
-        if(vehicles_currently.get_ready_ones() > next_seg_capacity)
+        
+        if(vehicles_currently.get_ready_ones() > next_seg_capacity){
             message = 1;    //if the ready ones are more than the next seg's capacity then case 1
         
-        for(int i = 0; i < next_seg_capacity; i++){
-            next->insert_vehicle(this->pass());
-        }      
+            cout << "the ready ones are more than the next seg's capacity." << endl;
         
+            Vehicle* temp;
+            for(int i = 0; i < next_seg_capacity; i++){
+                temp = this->pass();
+                cout << "1st TEMP IS " << temp << endl;
+                if(temp != NULL){
+                    next->insert_vehicle(temp);
+                     cout << "1st TEMP IS NOW" << temp << endl;
+                }
+            }
+
+        }
+        else{
+
+            cout << "the ready ones are fewer than the next seg's capacity." << endl;
+        
+
+            Vehicle* temp;
+            
+            cout << "Currently ready ones:" << vehicles_currently.get_ready_ones() << endl;
+
+            while(vehicles_currently.get_ready_ones() != 0){
+                temp = this->pass();
+                cout << "2nd TEMP IS " << temp << endl;;
+               
+                if(temp != NULL){
+                    next->insert_vehicle(temp);
+                    cout << "2nd TEMP IS NOW" << temp << endl;;
+               
+                }
+            }
+        }
+
         cout << "Some vehicles will enter via the entrance." << endl;
 
         bool  flag = enter();
@@ -91,7 +121,7 @@ bool Segment :: enter(){
     return entrance.operate(cur_capacity);
 }
 
-void Segment :: insert_vehicle(Vehicle* vehicle = NULL){
+void Segment :: insert_vehicle(Vehicle* vehicle){
     vehicles_currently.enter(vehicle);
 }
 
@@ -100,7 +130,9 @@ void Segment :: exit(){
 }
 
 Vehicle* Segment :: pass(){
-    return vehicles_currently.pass();
+    Vehicle* temp = NULL;
+    while((temp = vehicles_currently.pass()) == NULL);
+    return temp;
 }
 
 void Segment :: set_ready(){
@@ -116,10 +148,18 @@ float Segment :: percent = 0.5;
 
 void Segment :: set_NSegs(const int& NSegs){
     Segment:: NSegs = NSegs;
+    Entrance ::set_NSegs(NSegs);
 }
 
 int Segment :: NSegs = 5;
 
 unsigned int Segment :: get_ready_ones() const {
     return vehicles_currently.get_ready_ones();
+}
+
+void Segment:: set_pointers(Segment* previous,Segment* next){
+    
+    this->previous = previous;
+    this->next = next;
+
 }

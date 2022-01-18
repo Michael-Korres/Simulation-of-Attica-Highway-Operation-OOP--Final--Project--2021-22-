@@ -25,8 +25,14 @@ bool Queue :: is_empty() const{
 }
 
 void Queue :: enter(Vehicle* vehicle){
-	count++;
 	QueueNode* new_node = new QueueNode(vehicle,tail);
+	
+	if(is_empty()){
+		head->next = new_node;
+	}
+
+	count++;
+	
 	tail->next->next = new_node;	//the previously last node will point to the new last node
 	tail->next = new_node;	//the tail-node wiil also point to the new last node
 }
@@ -35,6 +41,9 @@ void Queue :: enter(Vehicle* vehicle){
 Vehicle* Queue :: exit(){
 	if(!is_empty()){
 		count--;
+		if(is_empty()){
+			tail->next = head;
+		}
 		Vehicle* to_be_returned = head->next->vehicle;	//first node's vehicle
 		QueueNode* second_node = head->next->next;	//the second node
 		delete head->next;	//delete first

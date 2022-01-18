@@ -121,7 +121,7 @@ class List{    //Implemented by a list like: head --> | --> | --> ... --> | <-->
 
 class Segment{
 	public:
-		Segment(const int& vehicle_capacity,const int& K,const int id,Segment* previous,Segment* next);
+		Segment(const int& vehicle_capacity,const int& K,const int id,Segment* previous = NULL,Segment* next = NULL);
 		~Segment();
 		void operate();
 		void insert_vehicle(Vehicle* vehicle);
@@ -134,6 +134,7 @@ class Segment{
 		static void set_NSegs(const int&);
 		unsigned int get_cur_capacity()const;
 		unsigned int get_ready_ones() const;
+		void set_pointers(Segment*,Segment*);
 	private:
 		static int NSegs;
 		Entrance entrance;
@@ -152,6 +153,8 @@ class Attica{
 		void operate();
 	private:
 		static void set_NSegs(const int&);
+		static void set_percent(const float&);
+		
 		int NSegs;
 		Segment** segs;
 		float percent;

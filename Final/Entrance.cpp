@@ -61,7 +61,7 @@ bool Entrance :: operate(unsigned const int& cars_that_can_enter){
 		flag = false;
 	}
 	
-	// cout << "Cars that can enter are " << cars_that_can_enter << endl;
+	cout << "Cars that can enter are " << cars_that_can_enter << endl;
 	// cout << "3 * K = " << 3 * K << endl;
 	// cout << "The barrier is " << barrier << endl;
 	if(flag){	// if barrier is 3 * K
@@ -102,7 +102,7 @@ bool Entrance :: operate(unsigned const int& cars_that_can_enter){
 			
 				if(count_of_cars_computer < 2 * K){	
 					if(!all_empty_with_computer()){
-						insert_from_tolls(tolls_with_computer,no_of_tolls_with_computer,count_of_cars_computer,i);
+						insert_from_tolls(tolls_with_computer,no_of_tolls_with_computer,count_of_cars_computer,j);
 					}
 					else{
 						empty_tolls = 2;
@@ -154,11 +154,10 @@ void Entrance :: enter(unsigned const int& seg_cur_capacity){
 
 void Entrance :: insert_from_tolls(Toll** toll,const int& no_of_tolls,int& count,int& ij){
 	Vehicle* temp;
-	if((temp = toll[ij]->exit_to_the_seg()) == NULL){	//not loop,just once
-		ij++;
-		if(ij == no_of_tolls){
-			ij = 0;
-		}
+	while((temp = toll[ij]->exit_to_the_seg()) == NULL);	//loop to find a toll with vehicles
+	ij++;
+	if(ij == no_of_tolls){
+		ij = 0;
 	}
 
 	entering_segment->insert_vehicle(temp);
@@ -172,7 +171,6 @@ void Entrance :: set_NSegs(unsigned const int& NSegs){
 }
 
 int Entrance:: NSegs = 5;
-
 
 
 
