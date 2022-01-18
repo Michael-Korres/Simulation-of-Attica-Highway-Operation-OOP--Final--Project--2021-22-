@@ -79,17 +79,17 @@ int List :: get_ready_ones() const {
 }
 
 void List :: set_ready(){
-	cout << "1.Print FROM THE LIST:: SET_READY()" << endl;
+	// cout << "1.Print FROM THE LIST:: SET_READY()" << endl;
 	
 	int unready_ones = count - get_ready_ones();
 	
-	cout << "2.Print FROM THE LIST:: SET_READY()" << endl;
+	// cout << "2.Print FROM THE LIST:: SET_READY()" << endl;
 	
 	int unready_ones_that_will_get_ready = unready_ones * percent;
 
 	ListNode* ptr = head->next;
 	
-	cout << "3.Print FROM THE LIST:: SET_READY()" << endl;
+	// cout << "3.Print FROM THE LIST:: SET_READY()" << endl;
 	
 	for(int i = 0;i < unready_ones_that_will_get_ready;i++){
 		if(!ptr->vehicle->is_ready()){

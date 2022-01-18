@@ -44,7 +44,7 @@ Attica :: ~Attica(){
 
 void Attica :: operate(){
 	total_count_of_vehicles = 0;
-	for(int i = NSegs - 1; i > 0; i--){
+	for(int i = NSegs - 1; i >= 0; i--){
 		cout << "Segment " << i << " is now operating. " << endl;
 		segs[i]->operate();
 		for(int j = NSegs-1; j > 0; j--){

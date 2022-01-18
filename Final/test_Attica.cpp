@@ -14,6 +14,7 @@ int main(int argc,char* argv[]){
 
     Attica attica(NSegs,K,percent,segs_cap);
 	attica.operate();
+	attica.operate();
 
 	return 0;
 }

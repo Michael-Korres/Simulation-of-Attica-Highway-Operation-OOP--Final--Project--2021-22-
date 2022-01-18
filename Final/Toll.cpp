@@ -2,8 +2,8 @@
 
 #include "final.h"
 
-Toll :: Toll(unsigned const int& no_of_vehicles_initially,unsigned const int& seg_id,const bool& has_a_worker)
-			: seg_id(seg_id),has_a_worker(has_a_worker){
+Toll :: Toll(unsigned const int& no_of_vehicles_initially,unsigned const int& seg_id)
+			: seg_id(seg_id){
 	int exit_interchange;
 
 	int vehicles = random_number_generator_within_range(no_of_vehicles_initially,no_of_vehicles_initially + no_of_vehicles_initially/2);
@@ -55,3 +55,23 @@ int Toll :: get_count()const{
 }
 
 int Toll :: NSegs = 5;
+
+//Speciaizations of Toll
+
+Toll_with_worker :: Toll_with_worker(unsigned const int& no_of_vehicles_initially,unsigned const int& seg_id):Toll(*this){
+	
+}
+
+
+Toll_with_computer :: Toll_with_computer(unsigned const int& no_of_vehicles_initially,unsigned const int& seg_id):Toll(*this){
+	
+}
+
+bool Toll_with_worker :: has_a_worker() const{
+	return true;	
+}
+
+
+bool Toll_with_computer :: has_a_worker() const{
+	return false;
+}

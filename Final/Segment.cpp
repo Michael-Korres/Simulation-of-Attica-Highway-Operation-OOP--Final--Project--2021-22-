@@ -36,11 +36,12 @@ unsigned int Segment :: get_cur_capacity()const{
 
 void Segment :: operate(){
     cout << "Some vehicles will exit the highway." << endl;
-    vehicles_currently.exit();
+    
+    if(seg_id != 0)vehicles_currently.exit();
 
     int message = 0;    //if nothing is true then we have the case 0
 
-    if(seg_id != NSegs - 1){
+    if((seg_id != NSegs - 1)){
         cout << "Some others will pass onto the next segment." << endl;
         
         int next_seg_capacity = next->get_cur_capacity();
@@ -54,10 +55,10 @@ void Segment :: operate(){
             Vehicle* temp;
             for(int i = 0; i < next_seg_capacity; i++){
                 temp = this->pass();
-                cout << "1st TEMP IS " << temp << endl;
+                // cout << "1st TEMP IS " << temp << endl;
                 if(temp != NULL){
                     next->insert_vehicle(temp);
-                     cout << "1st TEMP IS NOW" << temp << endl;
+                    //  cout << "1st TEMP IS NOW" << temp << endl;
                 }
             }
 
@@ -65,19 +66,19 @@ void Segment :: operate(){
         else{
 
             cout << "the ready ones are fewer than the next seg's capacity." << endl;
-        
+            
 
             Vehicle* temp;
             
-            cout << "Currently ready ones:" << vehicles_currently.get_ready_ones() << endl;
+            // cout << "Currently ready ones:" << vehicles_currently.get_ready_ones() << endl;
 
             while(vehicles_currently.get_ready_ones() != 0){
                 temp = this->pass();
-                cout << "2nd TEMP IS " << temp << endl;;
+                // cout << "2nd TEMP IS " << temp << endl;;
                
                 if(temp != NULL){
                     next->insert_vehicle(temp);
-                    cout << "2nd TEMP IS NOW" << temp << endl;;
+                    // cout << "2nd TEMP IS NOW" << temp << endl;;
                
                 }
             }
@@ -118,6 +119,7 @@ void Segment :: operate(){
 
 bool Segment :: enter(){
     unsigned const int& cur_capacity = get_cur_capacity();
+    cout << "Print from Segment:: Enter(). ---> " << cur_capacity << endl;
     return entrance.operate(cur_capacity);
 }
 
