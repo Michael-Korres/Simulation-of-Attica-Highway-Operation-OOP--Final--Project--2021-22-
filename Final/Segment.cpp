@@ -1,6 +1,6 @@
 #include "final.h"
 //Segment
-Segment :: Segment(const int& K,const int& capacity,const int seg_id,Segment* previous,Segment* next): entrance(capacity,seg_id,this),vehicles_currently(seg_id),seg_id(seg_id),vehicle_capacity(capacity),previous(previous),next(next){
+Segment :: Segment(const int& vehicle_capacity,const int& K,const int seg_id,Segment* previous,Segment* next): entrance(vehicle_capacity,K,seg_id,this),vehicles_currently(seg_id),seg_id(seg_id),vehicle_capacity(vehicle_capacity),previous(previous),next(next){
     //cout << "1st Print from Segment Constructor." << endl;
     
     int exit_interchange;
@@ -30,7 +30,8 @@ int Segment :: get_no_of_vehicles() const{
     return vehicles_currently.get_count();
 }
 
-int Segment :: get_cur_capacity()const{
+unsigned int Segment :: get_cur_capacity()const{
+    cout << "The Vehicle Capacity is " << vehicle_capacity << " and the vehicles currently are " << vehicles_currently.get_count() << endl;
     return vehicle_capacity - vehicles_currently.get_count();
 }
 

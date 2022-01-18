@@ -66,7 +66,7 @@ class Toll{
 class Segment;
 class Entrance{
 	public:
-		Entrance(unsigned const int& cur_capacity,unsigned const int& id,Segment* seg_ptr);
+		Entrance(unsigned const int& cur_capacity,unsigned const int& K,unsigned const int& id,Segment* seg_ptr);
 		~Entrance();
 		bool operate(unsigned const int&);
 		void enter(unsigned const int&);
@@ -119,7 +119,7 @@ class List{    //Implemented by a list like: head --> | --> | --> ... --> | <-->
 
 class Segment{
 	public:
-		Segment(const int& K,const int& vehicle_capacity,const int id,Segment* previous,Segment* next);
+		Segment(const int& vehicle_capacity,const int& K,const int id,Segment* previous,Segment* next);
 		~Segment();
 		void operate();
 		void insert_vehicle(Vehicle* vehicle);
@@ -130,7 +130,7 @@ class Segment{
 		int get_no_of_vehicles()const;
 		static void set_percent(const float&);
 		static void set_NSegs(const int&);
-		int get_cur_capacity()const;
+		unsigned int get_cur_capacity()const;
 	private:
 		static int NSegs;
 		Entrance entrance;

@@ -14,7 +14,7 @@ int main(int argc,char* argv[]){
 	int cur_capacity = 100;	//Current capacity: 100
 	cout << "The current capacity of the segment is " << cur_capacity << " vehicles." << endl;
 	
-	Entrance entrance(cur_capacity,3,NULL);
+	Entrance entrance(cur_capacity,10,3,NULL);
 
 	cout << "Entrance's vehicles in tolls with worker are " << entrance.get_count_worker() << endl;
 	cout << "Entrance's vehicles in tolls with computer are " << entrance.get_count_computer() << endl;
@@ -28,8 +28,11 @@ int main(int argc,char* argv[]){
 
 
 	Segment :: set_NSegs(NSegs);
-	Segment segment(10,cur_capacity,3,NULL,NULL);
+	Segment segment(cur_capacity,10,3,NULL,NULL);
 
+	cur_capacity = segment.get_cur_capacity();
+
+	segment.enter(cur_capacity);
 
 	return 0;
 }
