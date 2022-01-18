@@ -23,7 +23,7 @@ Toll :: ~Toll(){
 		delete vehicles_waiting.exit();
 	}
 
-	cout << "Just destructed a toll." <<  endl;
+	//cout << "Just destructed a toll." <<  endl;
 	
 }
 

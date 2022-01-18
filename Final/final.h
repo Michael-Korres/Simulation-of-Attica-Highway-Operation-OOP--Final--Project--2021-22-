@@ -103,7 +103,7 @@ class List{    //Implemented by a list like: head --> | --> | --> ... --> | <-->
 		bool is_empty() const;
 		void enter(Vehicle*);
 		void exit();
-		Vehicle* pass();
+		Vehicle* pass(const bool& = false);
 		Vehicle* delete_next(ListNode*);
 		void set_ready(const int&);
 
@@ -124,7 +124,7 @@ class Segment{
 		void operate();
 		void insert_vehicle(Vehicle* vehicle);
 		void exit();
-		bool enter();
+		bool enter(unsigned const int&);
 		Vehicle* pass();
 		void set_ready();
 		int get_no_of_vehicles()const;

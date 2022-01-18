@@ -1,22 +1,25 @@
 #include "final.h"
 //Segment
 Segment :: Segment(const int& K,const int& capacity,const int seg_id,Segment* previous,Segment* next): entrance(capacity,seg_id,this),vehicles_currently(seg_id),seg_id(seg_id),vehicle_capacity(capacity),previous(previous),next(next){
-    cout << "1st Print from Segment Constructor." << endl;
+    //cout << "1st Print from Segment Constructor." << endl;
     
     int exit_interchange;
 	int vehicles = random_number_generator_within_range(0,vehicle_capacity);
-	cout << "2nd Print from Segment Constructor." << endl;
+	//cout << "2nd Print from Segment Constructor." << endl;
     for(int i = 0;i < vehicles;i++){
-        cout << "Print from Seg-Loop" << endl;
+        //cout << "Print from Seg-Loop" << endl;
 		exit_interchange = random_number_generator_within_range(seg_id + 1,NSegs);
-		vehicles_currently.enter(new Vehicle(exit_interchange,seg_id,false));
+        //cout << "2.Print from Seg-Loop" << endl;
+		vehicles_currently.enter(new Vehicle(exit_interchange,seg_id));
 	}
-
+    cout << "Last Print from Segment Constructor." << endl;
 }
 
 Segment :: ~Segment(){
+    cout << "1st Print from Segment Destructor." << endl;
     while(!vehicles_currently.is_empty()){
-		delete vehicles_currently.pass();
+        //cout << "2";
+		delete vehicles_currently.pass(true);
 	}
 
 	cout << "Just destructed a segment." <<  endl;
@@ -52,7 +55,7 @@ void Segment :: operate(){
         
         cout << "Some vehicles will enter via the entrance." << endl;
 
-        bool  flag = enter();
+        bool  flag = enter(get_cur_capacity());
         if(flag){
             if(message == 0){
                 message = 2;    //if the ready ones are less than the next segs's capacity
@@ -83,8 +86,8 @@ void Segment :: operate(){
     }
 }
 
-bool Segment :: enter(){
-    return entrance.operate();
+bool Segment :: enter(unsigned const int& cur_capacity){
+    return entrance.operate(cur_capacity);
 }
 
 void Segment :: insert_vehicle(Vehicle* vehicle = NULL){

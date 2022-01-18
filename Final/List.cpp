@@ -9,45 +9,46 @@ ListNode :: ListNode(Vehicle* vehicle,ListNode* next):
 //List
 List :: List(const int& seg_id): seg_id(seg_id),count(0){
 	head = new ListNode(NULL,tail);
-	//tail = new ListNode(NULL,head);
+	tail = new ListNode(NULL,head);
 }
 
 List :: ~List(){
-	while(count != 0){
-		//exit();
-	}
 	delete head;
 	delete tail;
 }
 
 bool List :: is_empty() const{
-	return (count > 0);
+	return !(count > 0);
 }
 
 void List :: enter(Vehicle* vehicle){
 	count++;
 	ListNode* new_node = new ListNode(vehicle,tail);
+	//cout << "Print from List Enter" << endl;
 	tail->next->next = new_node;	//the previously last node will point to the new last node
 	tail->next = new_node;	//the tail-node wiil also point to the new last node
+	//cout << "2.Print from List Enter" << endl;
 }
 
 void List :: exit(){
 	if(!is_empty()){
 		//ListNode* ptr = head;	//initialize with head
-		for(ListNode* ptr = head; ptr->next!= NULL;ptr = ptr->next){
+		for(ListNode* ptr = head; ptr->next!= tail;ptr = ptr->next){
 			if(ptr->next->vehicle->is_ready() && (ptr->next->vehicle->get_exit() == seg_id)){
+				count--;
 				delete_next(ptr);
 			}
 		}
 	}
 }
 
-Vehicle* List :: pass(){
+Vehicle* List :: pass(const bool& destroy){
 	if(!is_empty()){
 		//ListNode* ptr = head;	//initialize with head
-		for(ListNode* ptr = head; ptr->next!= NULL;ptr = ptr->next){
-			if(ptr->next->vehicle->is_ready()){
-				return delete_next(ptr);
+		for(ListNode* ptr = head; ptr->next != tail;ptr = ptr->next){
+			if(ptr->next->vehicle->is_ready() || (destroy == true)){
+				count--;
+				return delete_next(ptr->next);
 			}
 		}
 	}
@@ -58,7 +59,7 @@ int List :: get_ready_ones() const {
 	int ready_count = 0;
 	if(!is_empty()){
 		//ListNode* ptr = head;	//initialize with head
-		for(ListNode* ptr = head; ptr->next != NULL;ptr = ptr->next){
+		for(ListNode* ptr = head; ptr->next != tail;ptr = ptr->next){
 			if(ptr->next->vehicle->is_ready()){
 				ready_count++;
 			}
@@ -81,15 +82,17 @@ void List :: set_ready(const int& percent){
 }
 
 Vehicle* List :: delete_next(ListNode* wanted_one){
+	//cout << "1st print from delete next." << endl;
 	if(!is_empty()){
 		int i;
 		count--;
 		
 		ListNode* ptr;	//initialize with head
 		
-		for(ptr = head; ptr->next != wanted_one; ptr = ptr->next){
-			ptr = ptr->next;	//so we get the previous node than the wanted one
-		}
+		for(ptr = head; ptr->next != wanted_one; ptr = ptr->next);//so we get the previous node than the wanted one
+
+		//cout << "2nd print from delete next." << endl;
+	
 
 		Vehicle* to_be_returned = ptr->next->vehicle;	//wanted node's vehicle
 		ListNode* second_node = ptr->next->next;	//the wanted node's next
@@ -97,6 +100,7 @@ Vehicle* List :: delete_next(ListNode* wanted_one){
 		ptr->next = second_node;	//connect the nodes
 		to_be_returned->set_unready();	//set unready the vehicle that will be returned
 		return to_be_returned;
+		
 	}
 	return NULL;
 }

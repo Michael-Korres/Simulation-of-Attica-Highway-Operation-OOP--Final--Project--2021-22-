@@ -33,6 +33,13 @@ seg_id(seg_id),entering_segment(seg_ptr),no_of_tolls_with_worker(random_number_g
 }
 
 Entrance :: ~Entrance(){
+	for(int i = 0; i < no_of_tolls_with_worker;i++){
+		delete tolls_with_worker[i];
+	}
+	for(int i = 0; i < no_of_tolls_with_computer;i++){
+		delete tolls_with_computer[i];
+	}
+	
 	delete[] tolls_with_worker;
 	delete[] tolls_with_computer;	
 }
