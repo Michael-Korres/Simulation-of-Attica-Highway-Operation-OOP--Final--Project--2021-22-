@@ -34,7 +34,7 @@ int main(int argc,char* argv[]){
 
 	cout << "There will enter at least " << no_of_vehicles_to_enter << " vehicles." << endl;
 
-	toll.enter_the_toll(no_of_vehicles_to_enter,3);	//(no_of_cars_to_enter,interchange,NSegs)
+	toll.enter_the_toll(no_of_vehicles_to_enter);	//(no_of_cars_to_enter,interchange,NSegs)
 
 	print_count(toll);	//print the count of vehicles
 	

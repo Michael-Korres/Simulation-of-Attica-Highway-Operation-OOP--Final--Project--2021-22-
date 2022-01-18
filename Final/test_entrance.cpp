@@ -20,5 +20,16 @@ int main(int argc,char* argv[]){
 
 	Entrance entrance(cur_capacity,3,NULL);
 
+	cout << "Entrance's vehicles in tolls with worker are " << entrance.get_count_worker() << endl;
+	cout << "Entrance's vehicles in tolls with computer are " << entrance.get_count_computer() << endl;
+	cout << "Entrance's vehicles overally are " << entrance.get_count() << endl;
+
+	entrance.enter(10);
+
+	cout << "Entrance's vehicles in tolls with worker are " << entrance.get_count_worker() << endl;
+	cout << "Entrance's vehicles in tolls with computer are " << entrance.get_count_computer() << endl;
+	cout << "Entrance's vehicles overally are " << entrance.get_count() << endl;
+
+
 	return 0;
 }

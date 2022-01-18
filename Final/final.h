@@ -49,7 +49,7 @@ class Toll{
 		Toll(unsigned const int&,unsigned const int&,const bool&);
 		~Toll();
 
-		void enter_the_toll(unsigned const int&,unsigned const int&);
+		void enter_the_toll(unsigned const int&);
 		Vehicle* exit_to_the_seg();
 		bool is_empty() const;
 		int get_count() const;
@@ -68,11 +68,14 @@ class Entrance{
 	public:
 		Entrance(unsigned const int& cur_capacity,unsigned const int& id,Segment* seg_ptr);
 		~Entrance();
-		bool operate();
-		void enter();
+		bool operate(unsigned const int&);
+		void enter(unsigned const int&);
 		static void set_NSegs(unsigned const int&);
 		void increase_K();
 		void decrease_K();
+		int get_count() const;
+		int get_count_worker() const;
+		int get_count_computer() const;
 	private:
 		static int NSegs;
 		int seg_id;

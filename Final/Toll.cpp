@@ -7,13 +7,13 @@ Toll :: Toll(unsigned const int& no_of_vehicles_initially,unsigned const int& se
 	int exit_interchange;
 
 	int vehicles = random_number_generator_within_range(no_of_vehicles_initially,no_of_vehicles_initially + no_of_vehicles_initially/2);
-	cout << "At start this toll has " << vehicles << " vehicles." <<  endl;
+	//cout << "At start this toll has " << vehicles << " vehicles." <<  endl;
 	for(int i = 0; i < vehicles; i++){
-		cout << i <<".Print from Toll-Loop" <<  endl;
+		//cout << i <<".Print from Toll-Loop" <<  endl;
 		exit_interchange = random_number_generator_within_range(seg_id + 1,NSegs);
 		vehicles_waiting.enter(new Vehicle(exit_interchange));
 	}
-	cout << "Exiting Toll constructor." <<  endl;
+	//cout << "Exiting Toll constructor." <<  endl;
 	
 }
 
@@ -28,11 +28,11 @@ Toll :: ~Toll(){
 }
 
 
-void Toll :: enter_the_toll(unsigned const int& no_of_vehicles_to_enter,unsigned const int& interchange){
+void Toll :: enter_the_toll(unsigned const int& no_of_vehicles_to_enter){
 	int exit_interchange;
 	int vehicles_that_will = random_number_generator_within_range(no_of_vehicles_to_enter,no_of_vehicles_to_enter + no_of_vehicles_to_enter/2);
 	for(int i = 0;i < vehicles_that_will;i++){
-		exit_interchange = random_number_generator_within_range(interchange + 1,NSegs);
+		exit_interchange = random_number_generator_within_range(seg_id + 1,NSegs);
 		vehicles_waiting.enter(new Vehicle(exit_interchange));
 	}
 	
