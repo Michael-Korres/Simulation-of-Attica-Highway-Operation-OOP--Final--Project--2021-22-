@@ -105,13 +105,15 @@ class List{    //Implemented by a list like: head --> | --> | --> ... --> | <-->
 		void exit();
 		Vehicle* pass(const bool& = false);
 		Vehicle* delete_next(ListNode*);
-		void set_ready(const int&);
+		void set_ready();
+		static void set_percent(const float&);
 
 		int get_count() const;
 		int get_ready_ones() const;
 		Vehicle* exit(const int&);
 	private:
 		int count;
+		static float percent;
 		const int seg_id;
 		ListNode* head;
 		ListNode* tail;
@@ -124,13 +126,14 @@ class Segment{
 		void operate();
 		void insert_vehicle(Vehicle* vehicle);
 		void exit();
-		bool enter(unsigned const int&);
+		bool enter();
 		Vehicle* pass();
 		void set_ready();
 		int get_no_of_vehicles()const;
 		static void set_percent(const float&);
 		static void set_NSegs(const int&);
 		unsigned int get_cur_capacity()const;
+		unsigned int get_ready_ones() const;
 	private:
 		static int NSegs;
 		Entrance entrance;

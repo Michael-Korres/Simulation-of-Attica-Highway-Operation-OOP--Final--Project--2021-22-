@@ -32,13 +32,13 @@ void List :: enter(Vehicle* vehicle){
 
 void List :: exit(){
 	if(!is_empty()){
-		//ListNode* ptr = head;	//initialize with head
-		for(ListNode* ptr = head; ptr->next!= tail;ptr = ptr->next){
-			if(ptr->next->vehicle->is_ready() && (ptr->next->vehicle->get_exit() == seg_id)){
-				count--;
-				delete_next(ptr);
+		
+		for(ListNode* ptr = head; ptr->next != tail;ptr = ptr->next){
+			while(ptr->next->vehicle->is_ready() && (ptr->next->vehicle->get_exit() == seg_id)){ //Using a while loop instead of an if statement,because otherwise it would never delete consecutive nodes
+				delete delete_next(ptr->next);	//same fix as pass()		
 			}
 		}
+
 	}
 }
 
@@ -46,8 +46,7 @@ Vehicle* List :: pass(const bool& destroy){
 	if(!is_empty()){
 		//ListNode* ptr = head;	//initialize with head
 		for(ListNode* ptr = head; ptr->next != tail;ptr = ptr->next){
-			if(ptr->next->vehicle->is_ready() || (destroy == true)){
-				count--;
+			while(ptr->next->vehicle->is_ready() || (destroy == true)){ //Using a while loop instead of an if statement,because otherwise it would never delete consecutive nodes
 				return delete_next(ptr->next);
 			}
 		}
@@ -68,15 +67,16 @@ int List :: get_ready_ones() const {
 	return ready_count;
 }
 
-void List :: set_ready(const int& percent){
+void List :: set_ready(){
 	int unready_ones = count - get_ready_ones();
 	int unready_ones_that_will_get_ready = unready_ones * percent;
 
 	ListNode* ptr = head->next;
 	
 	for(int i = 0;i < unready_ones_that_will_get_ready;i++){
-		if(!ptr->vehicle->is_ready())
+		if(!ptr->vehicle->is_ready()){
 			ptr->vehicle->set_ready();
+		}
 		ptr = ptr->next;
 	}
 }
@@ -84,21 +84,18 @@ void List :: set_ready(const int& percent){
 Vehicle* List :: delete_next(ListNode* wanted_one){
 	//cout << "1st print from delete next." << endl;
 	if(!is_empty()){
-		int i;
-		count--;
-		
 		ListNode* ptr;	//initialize with head
-		
+			
 		for(ptr = head; ptr->next != wanted_one; ptr = ptr->next);//so we get the previous node than the wanted one
 
 		//cout << "2nd print from delete next." << endl;
 	
-
+		count--;
 		Vehicle* to_be_returned = ptr->next->vehicle;	//wanted node's vehicle
 		ListNode* second_node = ptr->next->next;	//the wanted node's next
 		delete ptr->next;	//delete the wanted node
 		ptr->next = second_node;	//connect the nodes
-		to_be_returned->set_unready();	//set unready the vehicle that will be returned
+		//to_be_returned->set_unready();	//set unready the vehicle that will be returned
 		return to_be_returned;
 		
 	}
@@ -108,4 +105,9 @@ Vehicle* List :: delete_next(ListNode* wanted_one){
 int List :: get_count() const{
 	return count;
 }
-		
+
+void List :: set_percent(const float& percent){
+	List :: percent = percent;
+}
+
+float List :: percent = 0.5;

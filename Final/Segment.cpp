@@ -4,11 +4,12 @@ Segment :: Segment(const int& vehicle_capacity,const int& K,const int seg_id,Seg
     //cout << "1st Print from Segment Constructor." << endl;
     
     int exit_interchange;
-	int vehicles = random_number_generator_within_range(0,vehicle_capacity);
+	int vehicles = random_number_generator_within_range(0,vehicle_capacity/4);
 	//cout << "2nd Print from Segment Constructor." << endl;
     for(int i = 0;i < vehicles;i++){
         //cout << "Print from Seg-Loop" << endl;
-		exit_interchange = random_number_generator_within_range(seg_id + 1,NSegs);
+		exit_interchange = seg_id;//random_number_generator_within_range(seg_id + 1,NSegs);
+        
         //cout << "2.Print from Seg-Loop" << endl;
 		vehicles_currently.enter(new Vehicle(exit_interchange,seg_id));
 	}
@@ -16,10 +17,8 @@ Segment :: Segment(const int& vehicle_capacity,const int& K,const int seg_id,Seg
 }
 
 Segment :: ~Segment(){
-    cout << "1st Print from Segment Destructor." << endl;
     while(!vehicles_currently.is_empty()){
-        //cout << "2";
-		delete vehicles_currently.pass(true);
+       delete vehicles_currently.pass(true);
 	}
 
 	cout << "Just destructed a segment." <<  endl;
@@ -31,7 +30,7 @@ int Segment :: get_no_of_vehicles() const{
 }
 
 unsigned int Segment :: get_cur_capacity()const{
-    cout << "The Vehicle Capacity is " << vehicle_capacity << " and the vehicles currently are " << vehicles_currently.get_count() << endl;
+    //cout << "The Vehicle Capacity is " << vehicle_capacity << " and the vehicles currently are " << vehicles_currently.get_count() << endl;
     return vehicle_capacity - vehicles_currently.get_count();
 }
 
@@ -56,7 +55,7 @@ void Segment :: operate(){
         
         cout << "Some vehicles will enter via the entrance." << endl;
 
-        bool  flag = enter(get_cur_capacity());
+        bool  flag = enter();
         if(flag){
             if(message == 0){
                 message = 2;    //if the ready ones are less than the next segs's capacity
@@ -87,7 +86,8 @@ void Segment :: operate(){
     }
 }
 
-bool Segment :: enter(unsigned const int& cur_capacity){
+bool Segment :: enter(){
+    unsigned const int& cur_capacity = get_cur_capacity();
     return entrance.operate(cur_capacity);
 }
 
@@ -104,17 +104,22 @@ Vehicle* Segment :: pass(){
 }
 
 void Segment :: set_ready(){
-    vehicles_currently.set_ready(percent);
+    vehicles_currently.set_ready();
 }
 
 void Segment :: set_percent(const float& percent){
     Segment:: percent = percent;
+    List :: set_percent(percent);
 }
 
-float Segment :: percent = 0.6;
+float Segment :: percent = 0.5;
 
 void Segment :: set_NSegs(const int& NSegs){
     Segment:: NSegs = NSegs;
 }
 
 int Segment :: NSegs = 5;
+
+unsigned int Segment :: get_ready_ones() const {
+    return vehicles_currently.get_ready_ones();
+}
