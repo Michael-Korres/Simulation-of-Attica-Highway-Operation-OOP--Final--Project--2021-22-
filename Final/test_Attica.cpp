@@ -5,7 +5,7 @@ using namespace std;
 
 int main(int argc,char* argv[]){
 	srand(time(NULL));
-	
+	int N = 2;
 	int NSegs = 5;
 	int K = 20;
 	float percent = 0.5;

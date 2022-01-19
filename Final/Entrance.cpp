@@ -50,7 +50,6 @@ bool Entrance :: operate(unsigned const int& cars_that_can_enter){
 	int barrier;
 	bool flag;
 
-	cout << "1st Print of Entrance :: operate()" << endl;
 										//3K is the maximum no of cars to enter the seg
 	if(cars_that_can_enter >= 3 * K){	//if the cars_that_can_enter are more than or as many as that
 		barrier = 3 * K;	
@@ -61,11 +60,9 @@ bool Entrance :: operate(unsigned const int& cars_that_can_enter){
 		flag = false;
 	}
 	
-	cout << "Cars that can enter are " << cars_that_can_enter << endl;
 	// cout << "3 * K = " << 3 * K << endl;
 	// cout << "The barrier is " << barrier << endl;
 	if(flag){	// if barrier is 3 * K
-		cout << "3rd Print of Entrance :: operate()" << endl;
 	
 		while((count_of_cars_worker < K) && (!all_empty_with_worker())){	// insert from tolls with worker,as long as there are some containing vehicles
 			insert_from_tolls(tolls_with_worker,no_of_tolls_with_worker,count_of_cars_worker,i);
@@ -86,16 +83,11 @@ bool Entrance :: operate(unsigned const int& cars_that_can_enter){
 	}
 	else{	//if barrier is cars_that_can_enter < 3 * K
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		cout << "4th Print of Entrance :: operate()" << endl;
 		int empty_tolls = 0;
 		while(count_of_cars_worker + count_of_cars_computer < barrier){
-			//break;
-			cout << "The count_of_cars_worker + count_of_cars_computer is " << count_of_cars_worker + count_of_cars_computer << " and the barrier is " << barrier << endl;
-			
+		
 			if(count_of_cars_worker < K){	
 				if(!all_empty_with_worker()){
-					cout << "no_of_tolls_with_worker is " << no_of_tolls_with_worker << endl;
-					cout << "i is: " << i << endl;
 					insert_from_tolls(tolls_with_worker,no_of_tolls_with_worker,count_of_cars_worker,i);
 				}
 				else{
@@ -108,8 +100,6 @@ bool Entrance :: operate(unsigned const int& cars_that_can_enter){
 			
 				if(count_of_cars_computer < 2 * K){	
 					if(!all_empty_with_computer()){
-						cout << "no_of_tolls_with_computer is " << no_of_tolls_with_computer << endl;
-						cout << "j is: " << j << endl;
 						insert_from_tolls(tolls_with_computer,no_of_tolls_with_computer,count_of_cars_computer,j);
 					}
 					else{
@@ -126,46 +116,32 @@ bool Entrance :: operate(unsigned const int& cars_that_can_enter){
 
 	}
 
-	cout << "LAST PRINT fROM ENTRANCE :: OPERATE()" << endl;
-
 	bool return_value = (all_empty_with_computer() && all_empty_with_worker());
 	
 	int seg_cur_capacity = entering_segment->get_cur_capacity();
-
-	cout << "Segment current cap is: " << (signed)seg_cur_capacity  << endl;
 
 	enter(seg_cur_capacity);
 
 	return return_value;
 }
 
-void Entrance :: enter(unsigned const int& seg_cur_capacity){
-	cout << "Print from Entrance :: Enter()." << endl;
-            
+void Entrance :: enter(unsigned const int& seg_cur_capacity){            
 	int least_no_of_vehicles_to_enter_in_each = (seg_cur_capacity * 0.4) / no_of_tolls_with_worker;//0.4 of the current capacity / number of tolls with worker
-	
-	cout << "Each toll with worker will accept at least " << least_no_of_vehicles_to_enter_in_each << " vehicles" << endl;
-
 
 	for(int i = 0; i < no_of_tolls_with_worker;i++){
 		tolls_with_worker[i]->enter_the_toll(seg_cur_capacity);
-		// cout << "Toll[" << i << "] with worker has " << tolls_with_worker[i]->get_count() << " vehicles." << endl;
 	}
 
 	least_no_of_vehicles_to_enter_in_each = (seg_cur_capacity * 1.1) / no_of_tolls_with_computer;//1.1 of the current capacity / number of tolls with computer
 	
-	cout << "Each toll with computer will accept at least " << least_no_of_vehicles_to_enter_in_each << " vehicles" << endl;
-
 
 	for(int i = 0; i < no_of_tolls_with_computer;i++){
 		tolls_with_computer[i]->enter_the_toll(seg_cur_capacity);
-		//cout << "Toll[" << i << "] with computer has " << tolls_with_computer[i]->get_count() << " vehicles." << endl;
 	}
 	
 }
 
 void Entrance :: insert_from_tolls(Toll** toll,const int& no_of_tolls,int& count,int& ij){
-	cout << "INSERT FROM TOLLS" << endl;
 	Vehicle* temp = NULL;
 	
 	temp = toll[ij]->exit_to_the_seg();

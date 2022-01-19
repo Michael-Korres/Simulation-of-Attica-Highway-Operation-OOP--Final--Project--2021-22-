@@ -22,6 +22,7 @@ bool List :: is_empty() const{
 }
 
 void List :: enter(Vehicle* vehicle){
+	vehicle->set_segment(seg_id);
 	ListNode* new_node = new ListNode(vehicle,tail);
 	
 	if(is_empty()){

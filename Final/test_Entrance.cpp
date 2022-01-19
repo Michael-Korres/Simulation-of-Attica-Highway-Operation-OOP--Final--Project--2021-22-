@@ -30,9 +30,7 @@ int main(int argc,char* argv[]){
 	Segment :: set_NSegs(NSegs);
 	Segment segment(cur_capacity,10,3,NULL,NULL);
 
-	cur_capacity = segment.get_cur_capacity();
-
-	segment.enter(cur_capacity);
+	segment.enter();
 
 	return 0;
 }

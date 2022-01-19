@@ -2,7 +2,7 @@
 CC = g++
 
 #Object files
-OBJS = Attica.o random.o Segment.o List.o Vehicle.o Queue.o Toll.o Entrance.o test_Attica.o
+OBJS = Attica.o random.o Segment.o List.o Vehicle.o Queue.o Toll.o Entrance.o main.o
 
 #Attica.o Entrance.o List.o Queue.o Segment.o Toll.o 
 
@@ -12,7 +12,7 @@ EXEC:	$(OBJS)
 
 #run
 run:
-	./p 5 10 1 2 2
+	./p 200 5 20 0.5
 
 #Clean
 clean:
