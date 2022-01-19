@@ -120,6 +120,7 @@ bool Entrance :: operate(unsigned const int& cars_that_can_enter){
 
 	}
 
+	cout << "LAST PRINT fROM ENTRANCE :: OPERATE()" << endl;
 
 	bool return_value = (all_empty_with_computer() && all_empty_with_worker());
 	
@@ -156,22 +157,17 @@ void Entrance :: enter(unsigned const int& seg_cur_capacity){
 }
 
 void Entrance :: insert_from_tolls(Toll** toll,const int& no_of_tolls,int& count,int& ij){
+	cout << "INSERT FROM TOLLS" << endl;
 	Vehicle* temp = NULL;
 	
 	if(toll[ij]->has_a_worker()){
-		if(!all_empty_with_worker()){
-			while((temp = toll[ij]->exit_to_the_seg()) == NULL);	//loop to find a toll with vehicles
-		}
-		else{
-			return;
+		while(!all_empty_with_worker()){
+			if((temp = toll[ij]->exit_to_the_seg()) != NULL)break;	//loop to find a toll with vehicles
 		}
 	}
 	else{
-		if(!all_empty_with_computer()){
-			while((temp = toll[ij]->exit_to_the_seg()) == NULL);	//loop to find a toll with vehicles
-		}
-		else{
-			return;
+		while(!all_empty_with_worker()){
+			if((temp = toll[ij]->exit_to_the_seg()) != NULL)break;	//loop to find a toll with vehicles
 		}
 	}
 
@@ -179,6 +175,8 @@ void Entrance :: insert_from_tolls(Toll** toll,const int& no_of_tolls,int& count
 	if(ij == no_of_tolls){
 		ij = 0;
 	}
+
+	if(temp == NULL)return;
 
 	entering_segment->insert_vehicle(temp);
 	count++;

@@ -3,9 +3,9 @@
 #include "final.h"
 
 Toll :: Toll(unsigned const int& no_of_vehicles_initially,unsigned const int& seg_id)
-			: seg_id(seg_id){
+			: seg_id(seg_id),vehicles_waiting(){
 	int exit_interchange;
-
+	cout << "Just Constructed a toll" << endl;
 	int vehicles = random_number_generator_within_range(no_of_vehicles_initially,no_of_vehicles_initially + no_of_vehicles_initially/2);
 	//cout << "At start this toll has " << vehicles << " vehicles." <<  endl;
 	for(int i = 0; i < vehicles; i++){
@@ -18,17 +18,19 @@ Toll :: Toll(unsigned const int& no_of_vehicles_initially,unsigned const int& se
 }
 
 
+
 Toll :: ~Toll(){
 	while(!is_empty()){
 		delete vehicles_waiting.exit();
 	}
 
-	//cout << "Just destructed a toll." <<  endl;
+	cout << "Just destructed a toll." <<  endl;
 	
 }
 
 
 void Toll :: enter_the_toll(unsigned const int& no_of_vehicles_to_enter){
+	cout << "Print from Toll :: Enter_the_toll()" << endl;
 	int exit_interchange;
 	int vehicles_that_will = random_number_generator_within_range(no_of_vehicles_to_enter,no_of_vehicles_to_enter + no_of_vehicles_to_enter/2);
 	for(int i = 0;i < vehicles_that_will;i++){
@@ -56,21 +58,34 @@ int Toll :: get_count()const{
 
 int Toll :: NSegs = 5;
 
-//Speciaizations of Toll
+bool Toll :: has_a_worker() const{
+	return false;
+}
 
-Toll_with_worker :: Toll_with_worker(unsigned const int& no_of_vehicles_initially,unsigned const int& seg_id):Toll(*this){
-	
+//Specializations of Toll
+Toll_with_worker :: Toll_with_worker(unsigned const int& no_of_vehicles_initially,unsigned const int& seg_id):Toll(no_of_vehicles_initially,seg_id){
+	cout << " Just constructed Toll with worker" << endl;
 }
 
 
-Toll_with_computer :: Toll_with_computer(unsigned const int& no_of_vehicles_initially,unsigned const int& seg_id):Toll(*this){
-	
+Toll_with_worker :: ~Toll_with_worker(){
+	cout << "Just destructed Toll with worker" << endl;
 }
+
 
 bool Toll_with_worker :: has_a_worker() const{
 	return true;	
 }
 
+
+
+Toll_with_computer :: Toll_with_computer(unsigned const int& no_of_vehicles_initially,unsigned const int& seg_id):Toll(no_of_vehicles_initially,seg_id){
+	cout << "Just constructed Toll with computer" << endl;	
+}
+
+Toll_with_computer :: ~Toll_with_computer(){
+	cout << "Just destructed Toll with computer" << endl;
+}
 
 bool Toll_with_computer :: has_a_worker() const{
 	return false;

@@ -1,13 +1,15 @@
 #include "final.h"
 
 //QueueNode
-QueueNode :: QueueNode(Vehicle* vehicle = NULL,QueueNode* next = NULL):
+QueueNode :: QueueNode(Vehicle* vehicle,QueueNode* next):
 					   vehicle(vehicle),next(next){
 
 }
 //Queue
 Queue :: Queue(){
+	// cout << "1st Print of Queue" << endl;
 	head = new QueueNode(NULL,tail);
+	// cout << "head:" << head << endl;
 	tail = new QueueNode(NULL,head);
 	count = 0;
 }
@@ -26,10 +28,18 @@ bool Queue :: is_empty() const{
 
 void Queue :: enter(Vehicle* vehicle){
 	QueueNode* new_node = new QueueNode(vehicle,tail);
-	
+
+	// cout << "1st Print from Queue :: enter()" << endl;
+
+
 	if(is_empty()){
-		head->next = new_node;
+		// cout << "head:" << head << endl;
+		// cout << "new_node:" << new_node << endl;
+
+		head->next = new_node;	//Problematic Command
 	}
+
+	// cout << "2nd Print from Queue :: enter()" << endl;
 
 	count++;
 	

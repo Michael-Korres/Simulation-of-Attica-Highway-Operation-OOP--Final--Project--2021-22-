@@ -47,13 +47,13 @@ class Queue{    //Implemented by a list like: head --> | --> | --> ... --> | <--
 class Toll{
 	public:
 		Toll(unsigned const int&,unsigned const int&);
-		~Toll();
+		virtual ~Toll();
 
 		void enter_the_toll(unsigned const int&);
 		Vehicle* exit_to_the_seg();
 		bool is_empty() const;
 		int get_count() const;
-		virtual bool has_a_worker() const = 0;
+		virtual bool has_a_worker() const;
 		static void set_NSegs(unsigned const int&);
 	
 	private:
@@ -65,12 +65,14 @@ class Toll{
 class Toll_with_worker : public Toll{
 	public:
 		Toll_with_worker(unsigned const int&,unsigned const int&);
+		~Toll_with_worker();
 		bool has_a_worker() const;
 };
 
 class Toll_with_computer : public Toll{
 	public:
 		Toll_with_computer(unsigned const int&,unsigned const int&);
+		~Toll_with_computer();
 		bool has_a_worker() const;
 };
 
