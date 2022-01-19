@@ -85,6 +85,7 @@ bool Entrance :: operate(unsigned const int& cars_that_can_enter){
 
 	}
 	else{	//if barrier is cars_that_can_enter < 3 * K
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		cout << "4th Print of Entrance :: operate()" << endl;
 		int empty_tolls = 0;
 		while(count_of_cars_worker + count_of_cars_computer < barrier){
@@ -120,7 +121,7 @@ bool Entrance :: operate(unsigned const int& cars_that_can_enter){
 			if(empty_tolls == 2)break;
 
 		}
-
+		///////////////////////////////////////////////////////////////////////////////////////////
 		decrease_K();	//as of course fewer than 3 * K vehicles passed through,decrease K
 
 	}
