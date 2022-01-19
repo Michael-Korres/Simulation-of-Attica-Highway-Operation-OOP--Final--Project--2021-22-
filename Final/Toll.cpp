@@ -30,7 +30,7 @@ Toll :: ~Toll(){
 
 
 void Toll :: enter_the_toll(unsigned const int& no_of_vehicles_to_enter){
-	cout << "Print from Toll :: Enter_the_toll()" << endl;
+	//cout << "Print from Toll :: Enter_the_toll()" << endl;
 	int exit_interchange;
 	int vehicles_that_will = random_number_generator_within_range(no_of_vehicles_to_enter,no_of_vehicles_to_enter + no_of_vehicles_to_enter/2);
 	for(int i = 0;i < vehicles_that_will;i++){

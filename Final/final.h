@@ -145,7 +145,7 @@ class Segment{
 		int get_no_of_vehicles()const;
 		static void set_percent(const float&);
 		static void set_NSegs(const int&);
-		unsigned int get_cur_capacity()const;
+		int get_cur_capacity()const;
 		unsigned int get_ready_ones() const;
 		void set_pointers(Segment*,Segment*);
 	private:

@@ -87,11 +87,14 @@ bool Entrance :: operate(unsigned const int& cars_that_can_enter){
 	else{	//if barrier is cars_that_can_enter < 3 * K
 		cout << "4th Print of Entrance :: operate()" << endl;
 		int empty_tolls = 0;
-		while(count_of_cars_worker + count_of_cars_computer != barrier){
+		while(count_of_cars_worker + count_of_cars_computer < barrier){
+			//break;
 			cout << "The count_of_cars_worker + count_of_cars_computer is " << count_of_cars_worker + count_of_cars_computer << " and the barrier is " << barrier << endl;
 			
 			if(count_of_cars_worker < K){	
 				if(!all_empty_with_worker()){
+					cout << "no_of_tolls_with_worker is " << no_of_tolls_with_worker << endl;
+					cout << "i is: " << i << endl;
 					insert_from_tolls(tolls_with_worker,no_of_tolls_with_worker,count_of_cars_worker,i);
 				}
 				else{
@@ -99,11 +102,13 @@ bool Entrance :: operate(unsigned const int& cars_that_can_enter){
 				}
 			}
 
-			for(int i = 0; i < 2;i++){
-				if(count_of_cars_worker + count_of_cars_computer == barrier)break;
+			for(int p = 0; p < 2;p++){
+				if(count_of_cars_worker + count_of_cars_computer >= barrier)break;
 			
 				if(count_of_cars_computer < 2 * K){	
 					if(!all_empty_with_computer()){
+						cout << "no_of_tolls_with_computer is " << no_of_tolls_with_computer << endl;
+						cout << "j is: " << j << endl;
 						insert_from_tolls(tolls_with_computer,no_of_tolls_with_computer,count_of_cars_computer,j);
 					}
 					else{
@@ -125,6 +130,8 @@ bool Entrance :: operate(unsigned const int& cars_that_can_enter){
 	bool return_value = (all_empty_with_computer() && all_empty_with_worker());
 	
 	int seg_cur_capacity = entering_segment->get_cur_capacity();
+
+	cout << "Segment current cap is: " << (signed)seg_cur_capacity  << endl;
 
 	enter(seg_cur_capacity);
 
@@ -160,17 +167,7 @@ void Entrance :: insert_from_tolls(Toll** toll,const int& no_of_tolls,int& count
 	cout << "INSERT FROM TOLLS" << endl;
 	Vehicle* temp = NULL;
 	
-	if(toll[ij]->has_a_worker()){
-		while(!all_empty_with_worker()){
-			if((temp = toll[ij]->exit_to_the_seg()) != NULL)break;	//loop to find a toll with vehicles
-		}
-	}
-	else{
-		while(!all_empty_with_worker()){
-			if((temp = toll[ij]->exit_to_the_seg()) != NULL)break;	//loop to find a toll with vehicles
-		}
-	}
-
+	temp = toll[ij]->exit_to_the_seg();
 	ij++;
 	if(ij == no_of_tolls){
 		ij = 0;

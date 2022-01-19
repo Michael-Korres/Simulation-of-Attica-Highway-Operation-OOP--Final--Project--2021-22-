@@ -29,7 +29,7 @@ int Segment :: get_no_of_vehicles() const{
     return vehicles_currently.get_count();
 }
 
-unsigned int Segment :: get_cur_capacity()const{
+int Segment :: get_cur_capacity()const{
     //cout << "The Vehicle Capacity is " << vehicle_capacity << " and the vehicles currently are " << vehicles_currently.get_count() << endl;
     return vehicle_capacity - vehicles_currently.get_count();
 }
