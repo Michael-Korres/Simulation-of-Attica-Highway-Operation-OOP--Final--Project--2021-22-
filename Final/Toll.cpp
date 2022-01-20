@@ -9,7 +9,7 @@ Toll :: Toll(unsigned const int& no_of_vehicles_initially,unsigned const int& se
 	int vehicles = random_number_generator_within_range(no_of_vehicles_initially,no_of_vehicles_initially + no_of_vehicles_initially/2);
 	
 	for(int i = 0; i < vehicles; i++){
-		exit_interchange = random_number_generator_within_range(seg_id + 1,NSegs);
+		exit_interchange = random_number_generator_within_range(seg_id + 1,NSegs-1);
 		vehicles_waiting.enter(new Vehicle(exit_interchange));
 	}
 	
@@ -32,7 +32,7 @@ void Toll :: enter_the_toll(unsigned const int& no_of_vehicles_to_enter){
 	int exit_interchange;
 	int vehicles_that_will = random_number_generator_within_range(no_of_vehicles_to_enter,no_of_vehicles_to_enter + no_of_vehicles_to_enter/2);
 	for(int i = 0;i < vehicles_that_will;i++){
-		exit_interchange = random_number_generator_within_range(seg_id + 1,NSegs);
+		exit_interchange = random_number_generator_within_range(seg_id + 1,NSegs-1);
 		vehicles_waiting.enter(new Vehicle(exit_interchange));
 	}
 	

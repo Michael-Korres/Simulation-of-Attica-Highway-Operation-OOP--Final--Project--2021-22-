@@ -62,35 +62,29 @@ Vehicle* List :: pass(const bool& destroy){
 
 int List :: get_ready_ones() const {
 	int ready_count = 0;
-	//cout << "There are " << get_count() << " vehicles" << endl;
 	if(!is_empty()){
-		//cout << "Ready count : " << ready_count << endl;
-		//ListNode* ptr = head;	//initialize with head
 		int i = 0;
 		for(ListNode* ptr = head; ptr->next != tail;ptr = ptr->next){
-		//	cout << i<< ".Vehicle: " << ptr->next->vehicle << endl;
 			if(ptr->next->vehicle->is_ready()){
 		//		cout << "Ready count : " << ready_count << endl;
 				ready_count++;
 			}
-			i++;
 		}
 	}
 	return ready_count;
 }
 
 void List :: set_ready(){
-	// cout << "1.Print FROM THE LIST:: SET_READY()" << endl;
 	
 	int unready_ones = count - get_ready_ones();
-	
-	// cout << "2.Print FROM THE LIST:: SET_READY()" << endl;
-	
 	int unready_ones_that_will_get_ready = unready_ones * percent;
+	
+	float p = unready_ones * percent;
+	// cout << "The unready ones are:" << unready_ones << endl;
+	// cout << "Percent:" << percent << endl;
+	// cout << "The unready_ones_that_will_get_ready are:" << p << endl;
 
 	ListNode* ptr = head->next;
-	
-	// cout << "3.Print FROM THE LIST:: SET_READY()" << endl;
 	
 	for(int i = 0;i < unready_ones_that_will_get_ready;i++){
 		if(!ptr->vehicle->is_ready()){

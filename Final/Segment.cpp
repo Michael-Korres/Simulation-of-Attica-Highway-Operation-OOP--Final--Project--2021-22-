@@ -41,8 +41,9 @@ void Segment :: operate(){
         // cout << "Some others will pass onto the next segment." << endl;
         
         int next_seg_capacity = next->get_cur_capacity();
-        
-        
+        // cout << "All together in the seg: " << this->get_no_of_vehicles() << endl;
+        // cout << "The ready ones are :" << vehicles_currently.get_ready_ones() << " and the next seg's capacity is " << next_seg_capacity << endl;
+            
         if(vehicles_currently.get_ready_ones() > next_seg_capacity){
             message = 1;    //if the ready ones are more than the next seg's capacity then case 1
         

@@ -12,7 +12,7 @@ EXEC:	$(OBJS)
 
 #run
 run:
-	./p 200 5 20 0.5
+	./p 200 5 20 0.9
 
 #Clean
 clean:

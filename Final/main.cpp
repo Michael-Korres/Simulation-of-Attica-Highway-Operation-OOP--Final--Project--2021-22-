@@ -9,7 +9,7 @@ int main(int argc,char* argv[]){	//N,NSegs,K,Percent
 	int N = atoi(argv[1]);
 	int NSegs = atoi(argv[2]);
 	int K = atoi(argv[3]);
-	float percent = atoi(argv[4]);
+	float percent = atof(argv[4]);
 	int segs_cap[NSegs];
 	for(int i = 0; i < NSegs;i++)segs_cap[i] = i * 50;
 

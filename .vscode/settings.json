@@ -9,5 +9,6 @@
         "functional": "cpp"
     },
     "workbench.editor.highlightModifiedTabs": true,
-    "workbench.editor.scrollToSwitchTabs": true
+    "workbench.editor.scrollToSwitchTabs": true,
+    "workbench.editor.enablePreview": false
 }

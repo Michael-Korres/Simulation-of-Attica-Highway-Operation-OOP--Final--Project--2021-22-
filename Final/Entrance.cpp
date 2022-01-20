@@ -116,13 +116,11 @@ bool Entrance :: operate(unsigned const int& cars_that_can_enter){
 
 	}
 
-	bool return_value = (all_empty_with_computer() && all_empty_with_worker());
-	
 	int seg_cur_capacity = entering_segment->get_cur_capacity();
 
 	enter(seg_cur_capacity);
 
-	return return_value;
+	return !flag;
 }
 
 void Entrance :: enter(unsigned const int& seg_cur_capacity){            
