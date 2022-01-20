@@ -38,7 +38,8 @@ Attica :: Attica(const int& NSegs,const int& K,const float& percent,int* segs_ca
 }
 
 Attica :: ~Attica(){
-	delete[] segs;
+	for(int i = 0; i < NSegs;i++)delete segs[i];
+	delete segs;
 	cout << "Highway has been closed." << endl;
 }
 

@@ -9,7 +9,7 @@ Toll :: Toll(unsigned const int& no_of_vehicles_initially,unsigned const int& se
 	int vehicles = random_number_generator_within_range(no_of_vehicles_initially,no_of_vehicles_initially + no_of_vehicles_initially/2);
 	
 	for(int i = 0; i < vehicles; i++){
-		exit_interchange = random_number_generator_within_range(seg_id + 1,NSegs-1);
+		exit_interchange = random_number_generator_within_range(seg_id + 1,NSegs);
 		vehicles_waiting.enter(new Vehicle(exit_interchange));
 	}
 	
@@ -23,7 +23,7 @@ Toll :: ~Toll(){
 		delete vehicles_waiting.exit();
 	}
 
-	// cout << "Just destructed a toll." <<  endl;
+	//cout << "Just destructed a toll." <<  endl;
 	
 }
 
@@ -62,12 +62,12 @@ bool Toll :: has_a_worker() const{
 
 //Specializations of Toll
 Toll_with_worker :: Toll_with_worker(unsigned const int& no_of_vehicles_initially,unsigned const int& seg_id):Toll(no_of_vehicles_initially,seg_id){
-	cout << " Just constructed Toll with worker" << endl;
+	// cout << " Just constructed Toll with worker" << endl;
 }
 
 
 Toll_with_worker :: ~Toll_with_worker(){
-	cout << "Just destructed Toll with worker" << endl;
+	// cout << "Just destructed Toll with worker" << endl;
 }
 
 
@@ -78,11 +78,11 @@ bool Toll_with_worker :: has_a_worker() const{
 
 
 Toll_with_computer :: Toll_with_computer(unsigned const int& no_of_vehicles_initially,unsigned const int& seg_id):Toll(no_of_vehicles_initially,seg_id){
-	cout << "Just constructed Toll with computer" << endl;	
+	// cout << "Just constructed Toll with computer" << endl;	
 }
 
 Toll_with_computer :: ~Toll_with_computer(){
-	cout << "Just destructed Toll with computer" << endl;
+	// cout << "Just destructed Toll with computer" << endl;
 }
 
 bool Toll_with_computer :: has_a_worker() const{

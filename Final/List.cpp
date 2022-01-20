@@ -101,15 +101,8 @@ Vehicle* List :: delete_next(ListNode* wanted_one){
 			
 		for(ptr = head; ptr->next != wanted_one; ptr = ptr->next);//so we get the previous node than the wanted one
 
-		//cout << "2nd print from delete next." << endl;
 	
 		count--;
-
-		if(is_empty()){
-			tail->next = head;
-			head->next = tail;
-		}
-
 		Vehicle* to_be_returned = ptr->next->vehicle;	//wanted node's vehicle
 		ListNode* second_node = ptr->next->next;	//the wanted node's next
 		delete ptr->next;	//delete the wanted node

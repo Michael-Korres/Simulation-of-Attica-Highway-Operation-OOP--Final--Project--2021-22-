@@ -6,18 +6,21 @@ Segment :: Segment(const int& vehicle_capacity,const int& K,const int seg_id,Seg
 	int vehicles = random_number_generator_within_range(0,vehicle_capacity/4);
 	
     for(int i = 0;i < vehicles;i++){
-        exit_interchange = seg_id;//random_number_generator_within_range(seg_id + 1,NSegs);
+        exit_interchange = random_number_generator_within_range(seg_id + 1,NSegs);
         
         vehicles_currently.enter(new Vehicle(exit_interchange,seg_id));
 	}
+    // cout << "Just constructed a segment." <<  endl;
+	
 }
 
 Segment :: ~Segment(){
-    while(!vehicles_currently.is_empty()){
-       delete vehicles_currently.pass(true);
+    Vehicle* temp;
+    while((temp = vehicles_currently.pass(true)) != NULL){
+        delete temp;
 	}
 
-	cout << "Just destructed a segment." <<  endl;
+	// cout << "Just destructed a segment." <<  endl;
 	
 }
 

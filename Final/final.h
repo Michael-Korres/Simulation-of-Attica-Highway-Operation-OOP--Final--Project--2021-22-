@@ -47,7 +47,7 @@ class Queue{    //Implemented by a list like: head --> | --> | --> ... --> | <--
 class Toll{
 	public:
 		Toll(unsigned const int&,unsigned const int&);
-		~Toll();
+		virtual ~Toll();
 
 		void enter_the_toll(unsigned const int&);
 		Vehicle* exit_to_the_seg();

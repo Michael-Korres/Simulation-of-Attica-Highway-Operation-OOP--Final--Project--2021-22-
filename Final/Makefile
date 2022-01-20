@@ -12,8 +12,12 @@ EXEC:	$(OBJS)
 
 #run
 run:
-	./p 200 5 20 0.9
+	./p 5 5 20 0.9 250 200 150 100 50 0
 
 #Clean
 clean:
 	rm -f $(OBJS)  p
+
+#valgrind
+val:
+	valgrind --leak-check=full ./p 5 5 20 0.9 250 200 150 100 50 0

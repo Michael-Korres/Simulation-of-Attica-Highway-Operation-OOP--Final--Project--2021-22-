@@ -33,9 +33,16 @@ Entrance :: Entrance(unsigned const int& cur_capacity,unsigned const int& K,unsi
 }
 
 Entrance :: ~Entrance(){
+	Vehicle* temp;
+	for(int i = 0; i < no_of_tolls_with_worker; i++){
+		delete tolls_with_worker[i];
+	}
+	for(int i = 0; i < no_of_tolls_with_computer; i++){
+		delete tolls_with_computer[i];
+	}
 	delete[] tolls_with_worker;
 	delete[] tolls_with_computer;
-	cout << "Just destructed an entrance" << endl;	
+	//cout << "Just destructed an entrance" << endl;	
 }
 
 bool Entrance :: operate(unsigned const int& cars_that_can_enter){
