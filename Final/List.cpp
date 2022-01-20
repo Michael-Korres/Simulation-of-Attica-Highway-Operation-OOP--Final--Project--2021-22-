@@ -41,7 +41,7 @@ void List :: exit(){
 		
 		for(ListNode* ptr = head; ptr->next != tail;ptr = ptr->next){
 			while(ptr->next->vehicle->is_ready() && (ptr->next->vehicle->get_exit() == seg_id)){ //Using a while loop instead of an if statement,because otherwise it would never delete consecutive nodes
-				delete delete_next(ptr->next);	//same fix as pass()		
+				delete delete_next(ptr->next);		
 			}
 		}
 
@@ -50,7 +50,6 @@ void List :: exit(){
 
 Vehicle* List :: pass(const bool& destroy){
 	if(!is_empty()){
-		//ListNode* ptr = head;	//initialize with head
 		for(ListNode* ptr = head; ptr->next != tail;ptr = ptr->next){
 			if(ptr->next->vehicle->is_ready() || (destroy == true)){ //Using an if statement instead of a while loop,because one value gets returned
 				return delete_next(ptr->next);
@@ -66,7 +65,6 @@ int List :: get_ready_ones() const {
 		int i = 0;
 		for(ListNode* ptr = head; ptr->next != tail;ptr = ptr->next){
 			if(ptr->next->vehicle->is_ready()){
-		//		cout << "Ready count : " << ready_count << endl;
 				ready_count++;
 			}
 		}
@@ -79,11 +77,6 @@ void List :: set_ready(){
 	int unready_ones = count - get_ready_ones();
 	int unready_ones_that_will_get_ready = unready_ones * percent;
 	
-	float p = unready_ones * percent;
-	// cout << "The unready ones are:" << unready_ones << endl;
-	// cout << "Percent:" << percent << endl;
-	// cout << "The unready_ones_that_will_get_ready are:" << p << endl;
-
 	ListNode* ptr = head->next;
 	
 	for(int i = 0;i < unready_ones_that_will_get_ready;i++){
@@ -95,7 +88,6 @@ void List :: set_ready(){
 }
 
 Vehicle* List :: delete_next(ListNode* wanted_one){
-	//cout << "1st print from delete next." << endl;
 	if(!is_empty()){
 		ListNode* ptr;	//initialize with head
 			
@@ -103,6 +95,15 @@ Vehicle* List :: delete_next(ListNode* wanted_one){
 
 	
 		count--;
+
+		//change tail's pointer
+		if(is_empty()){
+			tail->next = head;
+		}
+		else if(ptr->next->next == tail){
+			tail->next = ptr;
+		}
+
 		Vehicle* to_be_returned = ptr->next->vehicle;	//wanted node's vehicle
 		ListNode* second_node = ptr->next->next;	//the wanted node's next
 		delete ptr->next;	//delete the wanted node

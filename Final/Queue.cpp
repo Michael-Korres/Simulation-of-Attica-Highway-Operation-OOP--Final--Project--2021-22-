@@ -7,9 +7,7 @@ QueueNode :: QueueNode(Vehicle* vehicle,QueueNode* next):
 }
 //Queue
 Queue :: Queue(){
-	// cout << "1st Print of Queue" << endl;
 	head = new QueueNode(NULL,tail);
-	// cout << "head:" << head << endl;
 	tail = new QueueNode(NULL,head);
 	count = 0;
 }
@@ -29,18 +27,9 @@ bool Queue :: is_empty() const{
 void Queue :: enter(Vehicle* vehicle){
 	QueueNode* new_node = new QueueNode(vehicle,tail);
 
-	// cout << "1st Print from Queue :: enter()" << endl;
-
-
 	if(is_empty()){
-		// cout << "head:" << head << endl;
-		// cout << "new_node:" << new_node << endl;
-
-		head->next = new_node;	//Problematic Command
+		head->next = new_node;
 	}
-
-	// cout << "2nd Print from Queue :: enter()" << endl;
-
 	count++;
 	
 	tail->next->next = new_node;	//the previously last node will point to the new last node
@@ -51,6 +40,8 @@ void Queue :: enter(Vehicle* vehicle){
 Vehicle* Queue :: exit(){
 	if(!is_empty()){
 		count--;
+		
+		//change tail's pointer
 		if(is_empty()){
 			tail->next = head;
 		}

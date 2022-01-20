@@ -29,7 +29,6 @@ int Segment :: get_no_of_vehicles() const{
 }
 
 int Segment :: get_cur_capacity()const{
-    //cout << "The Vehicle Capacity is " << vehicle_capacity << " and the vehicles currently are " << vehicles_currently.get_count() << endl;
     return vehicle_capacity - vehicles_currently.get_count();
 }
 
@@ -38,27 +37,23 @@ void Segment :: operate(){
     
     if(seg_id != 0)vehicles_currently.exit();
 
-    int message = 0;    //if nothing is true then we have the case 0
+    int message = 0;    //Case 0: The message: "Maintain distances" | if none of the other cases is true
 
     if((seg_id != NSegs - 1)){
         // cout << "Some others will pass onto the next segment." << endl;
         
         int next_seg_capacity = next->get_cur_capacity();
-        // cout << "All together in the seg: " << this->get_no_of_vehicles() << endl;
-        // cout << "The ready ones are :" << vehicles_currently.get_ready_ones() << " and the next seg's capacity is " << next_seg_capacity << endl;
-            
+ 
         if(vehicles_currently.get_ready_ones() > next_seg_capacity){
-            message = 1;    //if the ready ones are more than the next seg's capacity then case 1
+            message = 1;    //Case 1: The message : "Delays after Interchange" | Some of the ready ones will not pass
         
             // cout << "the ready ones are more than the next seg's capacity." << endl;
         
             Vehicle* temp;
             for(int i = 0; i < next_seg_capacity; i++){
                 temp = this->pass();
-                // cout << "1st TEMP IS " << temp << endl;
                 if(temp != NULL){
                     next->insert_vehicle(temp);
-                    //  cout << "1st TEMP IS NOW" << temp << endl;
                 }
             }
 
@@ -74,12 +69,8 @@ void Segment :: operate(){
 
             while(vehicles_currently.get_ready_ones() != 0){
                 temp = this->pass();
-                // cout << "2nd TEMP IS " << temp << endl;;
-               
                 if(temp != NULL){
                     next->insert_vehicle(temp);
-                    // cout << "2nd TEMP IS NOW" << temp << endl;;
-               
                 }
             }
         }
@@ -89,10 +80,11 @@ void Segment :: operate(){
         bool  flag = enter();
         if(flag){
             if(message == 0){
-                message = 2;    //if the ready ones are less than the next segs's capacity
-            }                   //but all vehicles from the tolls entered then case 2
+                message = 2;   //Case 2: Case 1 is false | which means:
+                                //the ready ones are less than the next segs's capacity and they shall pass
+            }                   //but the K conditions were true
             else{
-                message = 3;    //if both are true then case 3
+                message = 3;    //Case 3: if both Case 1 & Case 2 are true
             }
         }
     }    

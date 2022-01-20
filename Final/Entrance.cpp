@@ -4,7 +4,6 @@
 Entrance :: Entrance(unsigned const int& cur_capacity,unsigned const int& K,unsigned const int& seg_id,Segment* seg_ptr):
  K(K),seg_id(seg_id),entering_segment(seg_ptr),no_of_tolls_with_worker(random_number_generator_within_range(4,9)),no_of_tolls_with_computer(random_number_generator_within_range(3,5)){
 								//The no of tolls based in Real-World Attica
-	//cout << "1st Print from Entrance" << endl;
 	// cout << "The tolls with worker are " <<  no_of_tolls_with_worker << endl;
 	// cout << "The tolls with computer are " <<  no_of_tolls_with_computer << endl;
 
@@ -16,9 +15,7 @@ Entrance :: Entrance(unsigned const int& cur_capacity,unsigned const int& K,unsi
 	// cout << "Each toll with worker will start with at least " << least_no_of_vehicles_in_each << " vehicles" << endl;
 
 	for(int i = 0; i < no_of_tolls_with_worker;i++){
-		//cout << "Print from Entrance - Loop" << endl;
 		tolls_with_worker[i] = new Toll_with_worker(least_no_of_vehicles_in_each,seg_id);
-		//cout << "Toll[" << i << "] with worker has " << tolls_with_worker[i]->get_count() << " vehicles." << endl;
 	}
 
 	least_no_of_vehicles_in_each = (cur_capacity * 1.1) / no_of_tolls_with_computer;//1.1 of the current capacity / number of tolls with worker
@@ -28,7 +25,6 @@ Entrance :: Entrance(unsigned const int& cur_capacity,unsigned const int& K,unsi
 	
 	for(int i = 0; i < no_of_tolls_with_computer;i++){
 		tolls_with_computer[i] = new Toll_with_computer(least_no_of_vehicles_in_each,seg_id);	
-		//cout << "Toll[" << i << "] with computer has " << tolls_with_computer[i]->get_count() << " vehicles." << endl;
 	}
 }
 
@@ -46,7 +42,7 @@ Entrance :: ~Entrance(){
 }
 
 bool Entrance :: operate(unsigned const int& cars_that_can_enter){
-	//int cars_that_can_enter = entering_segment->get_cur_capacity();
+	//cars_that_can_enter == current capacity of the segment;
 	int count_of_cars_worker = 0;
 	int count_of_cars_computer = 0;
 	int i = 0;
@@ -63,21 +59,25 @@ bool Entrance :: operate(unsigned const int& cars_that_can_enter){
 		flag = true;					//then 
 	}
 	else{
-		barrier = cars_that_can_enter;
-		flag = false;
+		barrier = cars_that_can_enter;	//then either K by the tolls with worker or 2K by the tolls with computer
+		flag = false;					//is not to be reached
 	}
 	
-	// cout << "3 * K = " << 3 * K << endl;
-	// cout << "The barrier is " << barrier << endl;
 	if(flag){	// if barrier is 3 * K
 	
 		while((count_of_cars_worker < K) && (!all_empty_with_worker())){	// insert from tolls with worker,as long as there are some containing vehicles
 			insert_from_tolls(tolls_with_worker,no_of_tolls_with_worker,count_of_cars_worker,i);
 		}
+
+		if(all_empty_with_worker())	flag = false;	// then K was not reached
+
 		//then,if vehicles from tolls with worker reached K or there aren't any tolls with worker containing vehicles
 		while((count_of_cars_computer < 2 * K) && (!all_empty_with_computer())){ // insert from tolls with computer,as long as there are some containing vehicles
 			insert_from_tolls(tolls_with_computer,no_of_tolls_with_computer,count_of_cars_computer,j);
 		}
+
+		if(all_empty_with_computer())	flag = false;	// then 2K was not reached
+
 
 		//if maximum reached then increase K
 		if((count_of_cars_worker == K) && (count_of_cars_computer == 2 * K)){
@@ -127,10 +127,10 @@ bool Entrance :: operate(unsigned const int& cars_that_can_enter){
 
 	enter(seg_cur_capacity);
 
-	return !flag;
-}
-
-void Entrance :: enter(unsigned const int& seg_cur_capacity){            
+	return !flag;	//If K conditions were false ---> flag == false
+}					//So return !flag == True ---> In order to print the "Delays" message
+					//OR the opposite of the above
+void Entrance :: enter(unsigned const int& seg_cur_capacity){ 
 	int least_no_of_vehicles_to_enter_in_each = (seg_cur_capacity * 0.4) / no_of_tolls_with_worker;//0.4 of the current capacity / number of tolls with worker
 
 	for(int i = 0; i < no_of_tolls_with_worker;i++){
