@@ -13,6 +13,9 @@ List :: List(const int& seg_id): seg_id(seg_id),count(0){
 }
 
 List :: ~List(){
+	while(!is_empty()){
+		delete delete_next(head->next);
+	}
 	delete head;
 	delete tail;
 }
@@ -48,10 +51,10 @@ void List :: exit(){
 	}
 }
 
-Vehicle* List :: pass(const bool& destroy){
+Vehicle* List :: pass(){
 	if(!is_empty()){
 		for(ListNode* ptr = head; ptr->next != tail;ptr = ptr->next){
-			if(ptr->next->vehicle->is_ready() || (destroy == true)){ //Using an if statement instead of a while loop,because one value gets returned
+			if(ptr->next->vehicle->is_ready()){ //Using an if statement instead of a while loop,because one value gets returned
 				return delete_next(ptr->next);
 			}
 		}

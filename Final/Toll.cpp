@@ -19,9 +19,7 @@ Toll :: Toll(unsigned const int& no_of_vehicles_initially,unsigned const int& se
 
 Toll :: ~Toll(){
 	
-	while(!is_empty()){
-		delete vehicles_waiting.exit();
-	}
+	//delete vehicles_waiting;
 
 	//cout << "Just destructed a toll." <<  endl;
 	

@@ -86,9 +86,6 @@ class Entrance{
 		static void set_NSegs(unsigned const int&);
 		void increase_K();
 		void decrease_K();
-		int get_count() const;
-		int get_count_worker() const;
-		int get_count_computer() const;
 	private:
 		static int NSegs;
 		int seg_id;
@@ -116,7 +113,7 @@ class List{    //Implemented by a list like: head --> | --> | --> ... --> | <-->
 		bool is_empty() const;
 		void enter(Vehicle*);
 		void exit();
-		Vehicle* pass(const bool& = false);
+		Vehicle* pass();
 		Vehicle* delete_next(ListNode*);
 		void set_ready();
 		static void set_percent(const float&);

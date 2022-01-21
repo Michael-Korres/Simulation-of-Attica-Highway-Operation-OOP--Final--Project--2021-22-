@@ -6,7 +6,8 @@
         "limits": "cpp",
         "memory": "cpp",
         "istream": "cpp",
-        "functional": "cpp"
+        "functional": "cpp",
+        "new": "cpp"
     },
     "workbench.editor.highlightModifiedTabs": true,
     "workbench.editor.scrollToSwitchTabs": true,

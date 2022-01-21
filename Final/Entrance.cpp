@@ -72,7 +72,7 @@ bool Entrance :: operate(unsigned const int& cars_that_can_enter){
 		if(all_empty_with_worker())	flag = false;	// then K was not reached
 
 		//then,if vehicles from tolls with worker reached K or there aren't any tolls with worker containing vehicles
-		while((count_of_cars_computer < 2 * K) && (!all_empty_with_computer())){ // insert from tolls with computer,as long as there are some containing vehicles
+		while((count_of_cars_computer < 2 * K ) && (!all_empty_with_computer())){ // insert from tolls with computer,as long as there are some containing vehicles
 			insert_from_tolls(tolls_with_computer,no_of_tolls_with_computer,count_of_cars_computer,j);
 		}
 
@@ -199,22 +199,4 @@ void Entrance :: increase_K(){
 
 void Entrance :: decrease_K(){
 	K--;
-}
-
-int Entrance :: get_count() const {
-	return get_count_worker() + get_count_computer();
-}
-
-int Entrance :: get_count_worker() const{
-	int count = 0;
-	for(int i = 0;i < no_of_tolls_with_worker;i++)
-		count += tolls_with_worker[i]->get_count();
-	return count;
-}
-
-int Entrance :: get_count_computer() const{
-	int count = 0;
-	for(int i = 0;i < no_of_tolls_with_computer;i++)
-		count += tolls_with_computer[i]->get_count();
-	return count;
 }

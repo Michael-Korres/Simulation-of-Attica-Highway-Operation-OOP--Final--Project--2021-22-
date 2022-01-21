@@ -15,11 +15,6 @@ Segment :: Segment(const int& vehicle_capacity,const int& K,const int seg_id,Seg
 }
 
 Segment :: ~Segment(){
-    Vehicle* temp;
-    while((temp = vehicles_currently.pass(true)) != NULL){
-        delete temp;
-	}
-
 	// cout << "Just destructed a segment." <<  endl;
 	
 }
@@ -74,18 +69,18 @@ void Segment :: operate(){
                 }
             }
         }
+    }
+    
+    // cout << "Some vehicles will enter via the entrance." << endl;
 
-        // cout << "Some vehicles will enter via the entrance." << endl;
-
-        bool  flag = enter();
-        if(flag){
-            if(message == 0){
-                message = 2;   //Case 2: Case 1 is false | which means:
-                                //the ready ones are less than the next segs's capacity and they shall pass
-            }                   //but the K conditions were true
-            else{
-                message = 3;    //Case 3: if both Case 1 & Case 2 are true
-            }
+    bool  flag = enter();
+    if(flag){
+        if(message == 0){
+            message = 2;   //Case 2: Case 1 is false | which means:
+                            //the ready ones are less than the next segs's capacity and they shall pass
+        }                   //but the K conditions were true
+        else{
+            message = 3;    //Case 3: if both Case 1 & Case 2 are true
         }
     }    
     

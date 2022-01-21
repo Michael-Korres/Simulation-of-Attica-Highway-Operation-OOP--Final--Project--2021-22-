@@ -13,8 +13,8 @@ Queue :: Queue(){
 }
 
 Queue :: ~Queue(){
-	while(count > 0){
-		exit();
+	while(!is_empty()){
+		delete exit();
 	}
 	delete head;
 	delete tail;
